@@ -29,12 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
             bodyElement.classList.toggle('light-mode');
 
             // Actualizamos la etiqueta e icono del botón mediante el DOM
+            const customNavbar = document.querySelector('.custom-navbar');
             if (bodyElement.classList.contains('light-mode')) {
                 themeBtn.innerHTML = '<i class="fa-solid fa-sun me-1"></i> Modo Oscuro';
                 themeBtn.classList.replace('btn-outline-warning', 'btn-outline-dark');
+                if (customNavbar) customNavbar.classList.replace('navbar-dark', 'navbar-light');
             } else {
                 themeBtn.innerHTML = '<i class="fa-solid fa-moon me-1"></i> Modo Claro';
                 themeBtn.classList.replace('btn-outline-dark', 'btn-outline-warning');
+                if (customNavbar) customNavbar.classList.replace('navbar-light', 'navbar-dark');
             }
         });
     }
