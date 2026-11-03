@@ -256,6 +256,7 @@
                 <button class="btn btn-outline-info btn-filter-music" data-filter-music="pop">Pop / Electropop</button>
                 <button class="btn btn-outline-success btn-filter-music" data-filter-music="urbano">Urbano / Reggaetón</button>
                 <button class="btn btn-outline-primary btn-filter-music" data-filter-music="indie">Indie / Folk / Rock en Español</button>
+                
             </div>
                 <div class="table-responsive">
                     <table class="table custom-table mb-0">
@@ -463,7 +464,8 @@
                                 <td><span class="badge bg-info text-dark">Rock Alternativo / Pop Rock</span></td>
                                 <td class="music-desc">Yendo a la Casa de Damián, Ya No Se Qué Hacer Conmigo</td>
                             </tr>
-                        </tbody>
+                        
+                            </tbody>
                     </table>
                 </div>
             </div>
@@ -510,25 +512,76 @@
                 </h3>
                 <p class="opacity-75 mb-3">Deja tu opinión o mensaje. Se validará y se publicará inmediatamente debajo:</p>
                 
-                <form id="contactForm" class="row g-3">
+                <form id="contactForm" class="row g-3" novalidate>
+                    <!-- Nombre -->
                     <div class="col-md-6">
-                        <label for="nombre" class="form-label small fw-bold">Tu Nombre</label>
-                        <input type="text" id="nombre" class="form-control bg-dark bg-opacity-50 text-light border-secondary" placeholder="Ej. Juan Pérez">
+                        <label for="nombre" class="form-label small fw-bold">
+                            Tu Nombre <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" id="nombre"
+                            class="form-control bg-dark bg-opacity-50 text-light border-secondary"
+                            placeholder="Ej. Juan Pérez"
+                            maxlength="60" autocomplete="off">
+                        <div class="campo-error small mt-1" id="error-nombre"></div>
                     </div>
+
+                    <!-- Email -->
+                    <div class="col-md-6">
+                        <label for="email" class="form-label small fw-bold">
+                            Correo Electrónico <span class="text-danger">*</span>
+                        </label>
+                        <input type="email" id="email"
+                            class="form-control bg-dark bg-opacity-50 text-light border-secondary"
+                            placeholder="Ej. juan.perez@gmail.com"
+                            maxlength="80" autocomplete="off">
+                        <div class="campo-error small mt-1" id="error-email"></div>
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div class="col-md-6">
+                        <label for="telefono" class="form-label small fw-bold">
+                            Teléfono <span class="text-secondary small fw-normal">(solo números)</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-secondary">
+                                <i class="fa-solid fa-phone"></i>
+                            </span>
+                            <input type="tel" id="telefono"
+                                class="form-control bg-dark bg-opacity-50 text-light border-secondary"
+                                placeholder="Ej. 75012345"
+                                maxlength="15" inputmode="numeric" autocomplete="off">
+                        </div>
+                        <div class="campo-error small mt-1" id="error-telefono"></div>
+                    </div>
+
+                    <!-- Tipo de Mensaje -->
                     <div class="col-md-6">
                         <label for="categoriaComentario" class="form-label small fw-bold">Tipo de Mensaje</label>
                         <select id="categoriaComentario" class="form-select bg-dark bg-opacity-50 text-light border-secondary">
-                            <option value="Sugerencia">Sugerencia</option>
-                            <option value="Felicitación">Felicitación</option>
-                            <option value="Consulta">Consulta</option>
+                            <option value="Sugerencia">💡 Sugerencia</option>
+                            <option value="Felicitación">🎉 Felicitación</option>
+                            <option value="Consulta">❓ Consulta</option>
                         </select>
                     </div>
+
+                    <!-- Comentario -->
                     <div class="col-12">
-                        <label for="mensaje" class="form-label small fw-bold">Tu Comentario</label>
-                        <textarea id="mensaje" rows="3" class="form-control bg-dark bg-opacity-50 text-light border-secondary" placeholder="Escribe tu comentario aquí..."></textarea>
+                        <label for="mensaje" class="form-label small fw-bold">
+                            Tu Comentario <span class="text-danger">*</span>
+                        </label>
+                        <textarea id="mensaje" rows="3"
+                            class="form-control bg-dark bg-opacity-50 text-light border-secondary"
+                            placeholder="Escribe tu comentario aquí (mínimo 10 caracteres)..."
+                            maxlength="500"></textarea>
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <div class="campo-error small" id="error-mensaje"></div>
+                            <small id="contadorChars" class="text-secondary ms-auto">0 / 500</small>
+                        </div>
                     </div>
+
+                    <!-- Botón -->
                     <div class="col-12">
-                        <button type="submit" class="btn btn-warning fw-bold px-4 w-100 w-sm-auto">
+                        <button type="submit" class="btn btn-warning fw-bold px-4 w-100">
                             <i class="fa-solid fa-paper-plane me-1"></i> Publicar Comentario
                         </button>
                     </div>

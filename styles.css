@@ -686,6 +686,14 @@ body.light-mode .custom-navbar .navbar-toggler-icon {
 
 .btn-filter.active, .btn-filter-music.active {
     box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Múltiples activos en filtro de música — efecto "presionado" distinto a hover */
+.btn-filter-music.active {
+    filter: brightness(1.15);
+    outline: 2px solid rgba(255, 255, 255, 0.35);
+    outline-offset: 2px;
 }
 
 .card-juego {
@@ -1052,6 +1060,54 @@ body.light-mode .custom-table tr:hover td {
 
 .comment-card {
     transition: all 0.25s ease;
+}
+
+/* --- Validación de campos inline --- */
+.campo-error {
+    color: #ef4444;
+    font-size: 0.8rem;
+    min-height: 1.2em;
+    line-height: 1.3;
+}
+
+/* Override Bootstrap is-invalid / is-valid para campos oscuros */
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 0.2rem rgba(239, 68, 68, 0.25) !important;
+}
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Ocultar los iconos de feedback nativos de Bootstrap (no encajan con dark inputs) */
+.form-control.is-invalid,
+.form-control.is-valid {
+    background-image: none !important;
+    padding-right: 0.75rem !important;
+}
+
+/* Modo claro — ajuste de colores del formulario */
+body.light-mode .campo-error {
+    color: #dc2626;
+}
+body.light-mode .form-control.is-invalid,
+body.light-mode .form-select.is-invalid {
+    border-color: #dc2626 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 38, 38, 0.25) !important;
+}
+body.light-mode .form-control.is-valid,
+body.light-mode .form-select.is-valid {
+    border-color: #059669 !important;
+    box-shadow: 0 0 0 0.2rem rgba(5, 150, 105, 0.2) !important;
+}
+
+/* Contador de caracteres — colores dinámicos */
+#contadorChars {
+    transition: color 0.2s ease;
+    font-size: 0.78rem;
 }
 
 /* =======================================================
