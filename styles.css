@@ -713,13 +713,19 @@ body.light-mode .custom-navbar .navbar-toggler-icon {
 @media (max-width: 767.98px) {
     #horario .ratio-16x9 {
         --bs-aspect-ratio: unset;
-        height: 380px;
+        height: 520px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #horario .ratio-16x9 {
+        height: 580px;
     }
 }
 
 @media (max-width: 479.98px) {
     #horario .ratio-16x9 {
-        height: 320px;
+        height: 650px;
     }
 }
 
