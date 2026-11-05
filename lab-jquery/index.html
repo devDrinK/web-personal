@@ -1,40 +1,143 @@
-body {
-  margin: 0;
-  padding: 0;
-  background: darkred;
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Gaming Center - Estaciones y Tarifas</title>
+    <!-- Enlace a la hoja de estilos externa -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Importar jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body class="tema-ps5"> <!-- Tema inicial por defecto -->
 
-header {
-  background: grey;
-  width: 100vw;
-}
-.listalinks {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
+    <!-- Overlay de degradado sobre la imagen de fondo -->
+    <div class="background-overlay"></div>
 
-.imagen {
-  width: 100vw;
-  height: 50%;
-}
-img {
-  width: 100%;
-}
+    <header>
+        <h1 id="titulo-principal">🎮 Nexus Gaming Center</h1>
+        <p>Selecciona una plataforma para ver su ficha técnica, galería e interactuar</p>
+    </header>
 
-.contenido {
-  padding: 5%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
+    <div class="container" id="main-container">
+        <!-- Selector de Temáticas (Reto Nivel PRO) -->
+        <div class="selector-tematica">
+            <button class="btn-tema" data-tema="ps5" data-titulo="🎮 Estación PlayStation 5">PS5</button>
+            <button class="btn-tema" data-tema="xbox" data-titulo="🟢 Zona Xbox Series X">Xbox</button>
+            <button class="btn-tema" data-tema="pc" data-titulo="💻 Zona PC Gamer Pro">PC Gamer</button>
+        </div>
 
-footer {
-  padding: 10%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.footertxt {
-  width: 40%;
-}
+        <!-- Acordeón 1: Equipamiento e Imagen de la Consola -->
+        <button class="accordion-btn">
+            <span class="icono">⚡</span> Ver Detalles y Consola
+        </button>
+        <div class="accordion-panel">
+            <div class="equipamiento-content">
+                <p id="info-equipamiento">Incluye consola PS5 con mandos DualSense Edge, pantallas 4K HDR a 120Hz y auriculares 3D Pulse.</p>
+                <!-- Contenedor para la imagen de la consola -->
+                <div class="imagen-consola-container">
+                    <img id="img-consola" src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80" alt="PlayStation 5">
+                </div>
+            </div>
+        </div>
+
+        <!-- Acordeón 2: Tarifas -->
+        <button class="accordion-btn">
+            <span class="icono">💲</span> Tarifas y Paquetes por Hora
+        </button>
+        <div class="accordion-panel">
+            <p id="info-tarifas"><strong>Hora individual:</strong> $3.00 USD <br><strong>Pack Nocturno (5 horas):</strong> $12.00 USD</p>
+        </div>
+
+        <!-- Acordeón 3: Catálogo de Juegos -->
+        <button class="accordion-btn">
+            <span class="icono">🔥</span> Catálogo de Juegos Disponibles (6 Destacados)
+        </button>
+        <div class="accordion-panel">
+            <ul id="lista-juegos" class="catalogo-juegos">
+                <li>Marvel's Spider-Man 2</li>
+                <li>God of War Ragnarök</li>
+                <li>EA Sports FC 24</li>
+                <li>Mortal Kombat 1</li>
+                <li>Demon's Souls Remake</li>
+                <li>Street Fighter 6</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // 1. Efecto Desplegable Suave (Acordeón base de la guía)
+            $('.accordion-btn').click(function() {
+                $(this).next('.accordion-panel').slideToggle('fast');
+            });
+
+            // 2. Reto Nivel PRO: Cambio Dinámico de Temática, Fondos, Imágenes e Iconos con jQuery
+            $('.btn-tema').click(function() {
+                let temaSeleccionado = $(this).data('tema'); // Obtiene 'ps5', 'xbox' o 'pc'
+                let nuevoTitulo = $(this).data('titulo');     // Obtiene el texto del título
+
+                // Cambiar clases del body para modificar el fondo y los acentos
+                $('body').removeClass('tema-ps5 tema-xbox tema-pc').addClass('tema-' + temaSeleccionado);
+
+                // Cambiar dinámicamente el título principal
+                $('#titulo-principal').html(nuevoTitulo);
+
+                // Cambiar contenido, imágenes y catálogos según la temática seleccionada
+                if (temaSeleccionado === 'ps5') {
+                    $('#info-equipamiento').text('Incluye consola PS5 con mandos DualSense Edge, pantallas 4K HDR a 120Hz y auriculares 3D Pulse.');
+                    $('#img-consola').attr({
+                        'src': 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80',
+                        'alt': 'PlayStation 5'
+                    });
+                    $('#info-tarifas').html('<strong>Hora individual:</strong> $3.00 USD <br><strong>Pack Nocturno (5 horas):</strong> $12.00 USD');
+                    
+                    $('#lista-juegos').html(`
+                        <li>Marvel's Spider-Man 2</li>
+                        <li>God of War Ragnarök</li>
+                        <li>EA Sports FC 24</li>
+                        <li>Mortal Kombat 1</li>
+                        <li>Demon's Souls Remake</li>
+                        <li>Street Fighter 6</li>
+                    `);
+                } else if (temaSeleccionado === 'xbox') {
+                    $('#info-equipamiento').text('Incluye consola Xbox Series X con mandos Elite Series 2, pantallas 4K y acceso a Game Pass Ultimate.');
+                    $('#img-consola').attr({
+                        'src': 'https://images.unsplash.com/photo-1621259182978-fbf93132d53d?auto=format&fit=crop&w=600&q=80',
+                        'alt': 'Xbox Series X'
+                    });
+                    $('#info-tarifas').html('<strong>Hora individual:</strong> $3.00 USD <br><strong>Pack Fin de Semana:</strong> $10.00 USD');
+                    
+                    $('#lista-juegos').html(`
+                        <li>Halo Infinite</li>
+                        <li>Forza Horizon 5</li>
+                        <li>Gears 5</li>
+                        <li>Starfield</li>
+                        <li>Microsoft Flight Simulator</li>
+                        <li>Hogwarts Legacy</li>
+                    `);
+                } else if (temaSeleccionado === 'pc') {
+                    $('#info-equipamiento').text('PCs con tarjetas RTX 4080, procesadores i7 de última gen, monitores 240Hz y teclados mecánicos RGB.');
+                    $('#img-consola').attr({
+                        'src': 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=600&q=80',
+                        'alt': 'PC Gamer Pro'
+                    });
+                    $('#info-tarifas').html('<strong>Hora individual:</strong> $3.50 USD <br><strong>Pack eSports (6 horas):</strong> $15.00 USD');
+                    
+                    $('#lista-juegos').html(`
+                        <li>Valorant</li>
+                        <li>Counter-Strike 2</li>
+                        <li>League of Legends</li>
+                        <li>Cyberpunk 2077</li>
+                        <li>Grand Theft Auto V</li>
+                        <li>Dota 2</li>
+                    `);
+                }
+
+                // Efecto visual sutil de parpadeo en el contenedor al cambiar de tema
+                $('#main-container').fadeOut(100).fadeIn(200);
+            });
+        });
+    </script>
+</body>
+</html>
