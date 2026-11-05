@@ -1,42 +1,300 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>Sitio Web Personal</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- HOJA DE ESTILOS PROPIA -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class="listalinks">
-                <li><a href="opción 1">opción 1</a></li>
-                <li><a href="opción 2">opción 2</a></li>
-                <li><a href="opción 3">opción 3</a></li>
-            </ul>
-        </nav>
-    </header>
-    <section class="imagen">
-        <img src="img/7fb76a43e1ed157124bde09231a86a8a.jpg" alt="" />
-    </section>
-    <section class = "contenido">
-        <div>
-            texto de prueba
+
+    <!-- 1. Navbar Fija y Translúcida con Menú Hamburguesa y Toggle de Tema -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 text-truncate" href="#">
+                <i class="fa-solid fa-terminal text-warning flex-shrink-0"></i>
+                <span class="brand-name">JOSUE MARCELO VASQUEZ ZEBALLOS</span>
+            </a>
+            
+            <!-- Botón Hamburguesa[cite: 5, 8] -->
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#intereses">Intereses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#juegos">Juegos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#horario">Horario</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#musica">Música</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                </ul>
+
+                <!-- Botón Modo Oscuro / Claro[cite: 2, 8] -->
+                <button id="themeBtn" class="btn btn-outline-warning btn-sm ms-lg-3 mt-2 mt-lg-0 rounded-pill px-3">
+                    <i class="fa-solid fa-moon me-1"></i> Modo Claro
+                </button>
+            </div>
         </div>
-        <div>
-            otro texto de prueba
+    </nav>
+
+    <!-- Espaciador para la navbar fija -->
+    <div style="height: 75px;"></div>
+
+    <!-- Contenido Principal -->
+    <div class="container py-4">
+
+        <!-- 2. Carrusel de Fotos -->
+        <section id="inicio" class="mb-5">
+            <div id="mainCarousel" class="carousel slide shadow-lg glass-card p-2" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop" class="d-block w-100" alt="Ingeniería de Sistemas - UPDS">
+                        <div class="carousel-caption">
+                            <h5 class="fw-bold text-warning"><i class="fa-solid fa-graduation-cap me-2"></i>Ingeniería de Sistemas</h5>
+                            <p class="mb-0 d-none d-sm-block">Estudiante de 6to semestre en la Universidad Privada Domingo Savio (UPDS).</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg" class="d-block w-100" alt="El Señor de los Anillos">
+                        <div class="carousel-caption">
+                            <h5 class="fw-bold text-info"><i class="fa-solid fa-ring me-2"></i>El Señor de los Anillos</h5>
+                            <p class="mb-0 d-none d-sm-block">Cine de culto y fantasía épica: una obra maestra sobre valor, lealtad y aventura.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="img/thegodfather.jpeg" class="d-block w-100" alt="El Padrino">
+                        <div class="carousel-caption">
+                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-film me-2"></i>El Padrino (The Godfather)</h5>
+                            <p class="mb-0 d-none d-sm-block">Pasión por el cine clásico: el arte inigualable del drama, la estrategia y la familia.</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. Pasatiempos e Intereses -->
+        <section id="intereses" class="mb-5">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="glass-card p-4 h-100">
+                        <h3 class="section-title text-warning">
+                            <i class="fa-solid fa-gamepad me-2"></i>Pasatiempos
+                        </h3>
+                        <p class="text-secondary small mb-4">(Ocio y desconexión)</p>
+                        <ol class="custom-list list-pasatiempos">
+                            <li>Ver videos divulgativos</li>
+                            <li>Buscar curiosidades por redes sociales</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="glass-card p-4 h-100">
+                        <h3 class="section-title text-info">
+                            <i class="fa-solid fa-lightbulb me-2"></i>Intereses
+                        </h3>
+                        <p class="text-secondary small mb-4">(Desarrollo y crecimiento)</p>
+                        <ol class="custom-list list-intereses">
+                            <li>Caminar</li>
+                            <li>Escribir</li>
+                            <li>Pruebas de IA para proyectos pequeños</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Catálogo de Juegos Actualizado con Filtros y Tráilers en Modal -->
+        <section id="juegos" class="mb-5">
+            <div class="glass-card p-4">
+                <h3 class="section-title text-info">
+                    <i class="fa-solid fa-headset me-2"></i>Catálogo de Juegos Favoritos
+                </h3>
+                <p class="opacity-75 mb-3">Filtra mi colección por género o haz clic en cualquier juego para ver su tráiler oficial:</p>
+                
+                <!-- Botones de filtro de juegos -->
+                <div class="mb-4 d-flex gap-2 flex-wrap">
+                    <button class="btn btn-outline-light btn-filter active" data-filter="todos">Ver Todos</button>
+                    <button class="btn btn-outline-info btn-filter" data-filter="shooter">Shooters</button>
+                    <button class="btn btn-outline-warning btn-filter" data-filter="rpg">RPG</button>
+                    <button class="btn btn-outline-danger btn-filter" data-filter="accion">Acción / Aventura</button>
+                    <button class="btn btn-outline-success btn-filter" data-filter="terror">Terror</button>
+                </div>
+
+                <div class="row g-3" id="catalogoJuegos">
+                    
+                    <!-- The Witcher 3 -->
+                    <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="rpg">
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="The Witcher 3: Wild Hunt" data-video="https://www.youtube.com/embed/c0i8kPYtiiI" role="button">
+                            <h5 class="fw-bold text-warning"><i class="fa-solid fa-dragon me-2"></i>The Witcher 3</h5>
+                            <span class="badge bg-warning text-dark">RPG</span>
+                            <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
+                        </div>
+                    </div>
+                    <!-- God of War -->
+                    <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="accion">
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="God of War (2018)" data-video="https://www.youtube.com/embed/K0u_kAWLJOA" role="button">
+                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-axe-battle me-2"></i>God of War</h5>
+                            <span class="badge bg-danger text-white">Acción / Aventura</span>
+                            <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
+                        </div>
+                    </div>
+                    <!-- Red Dead Redemption 2 -->
+                    <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="accion">
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Red Dead Redemption 2" data-video="https://www.youtube.com/embed/gmA6MrX81z4" role="button">
+                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-horse me-2"></i>Red Dead Redemption 2</h5>
+                            <span class="badge bg-danger text-white">Acción / Mundo Abierto</span>
+                            <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
+                        </div>
+                    </div>
+                    <!-- Resident Evil -->
+                    <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="terror">
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Resident Evil 4 Remake" data-video="https://www.youtube.com/embed/E69q0gzt-sQ" role="button">
+                            <h5 class="fw-bold text-success"><i class="fa-solid fa-ghost me-2"></i>Resident Evil</h5>
+                            <span class="badge bg-success text-white">Terror / Survival</span>
+                            <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
+                        </div>
+                    </div>
+                    <!-- Final Fantasy -->
+                    <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="rpg">
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Final Fantasy VII Rebirth" data-video="https://www.youtube.com/embed/H3s0uRLiIdM" role="button">
+                            <h5 class="fw-bold text-warning"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Final Fantasy</h5>
+                            <span class="badge bg-warning text-dark">RPG</span>
+                            <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
+                        </div>
+                    </div>
+                    <!-- The Legend of Zelda -->
+                    <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="accion">
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="The Legend of Zelda: Tears of the Kingdom" data-video="https://www.youtube.com/embed/uHGShqcAHlQ" role="button">
+                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-shield-halved me-2"></i>The Legend of Zelda</h5>
+                            <span class="badge bg-danger text-white">Acción / Aventura</span>
+                            <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODAL DE BOOTSTRAP PARA EL TRÁILER -->
+        <div class="modal fade" id="modalTrailer" tabindex="-1" aria-labelledby="modalTrailerLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content bg-dark text-light border border-secondary">
+                    <div class="modal-header border-secondary">
+                        <h5 class="modal-title fw-bold text-warning" id="modalTrailerLabel">Tráiler Oficial</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <div class="ratio ratio-16x9">
+                            <!-- El iframe se cargará dinámicamente sin autoplay -->
+                            <iframe id="iframeTrailer" src="" title="YouTube video player" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
-    <footer>
-        <ul class="linksfooter">
-            <li><a href="rrss 1">rrss 1</a></li>
-            <li><a href="rrss 2">rrss 2</a></li>
-            <li><a href="rrss 3">rrss 3</a></li>
-        </ul>
-        <div class="footertxt">
-            lorem ipsum y demas texto de prueba para ver como queda en la página 
-        </div>
-    </footer>
-</body>
-</html>
+        
+
+
+
+        <!-- 5. Horario Google Sheets -->
+        <section id="horario" class="mb-5">
+            <div class="glass-card p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                    <h3 class="section-title text-success mb-0">
+                        <i class="fa-solid fa-calendar-days me-2"></i>Horario
+                    </h3>
+                    <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
+                        <i class="fa-solid fa-rotate me-1"></i> Infaltables diarios (Google Sheets)
+                    </span>
+                </div>
+                <p class="opacity-75 mb-3">
+                    Visualización directa de mi planificación semanal estructurada desde Google Sheets:
+                </p>
+                <div class="iframe-container ratio ratio-16x9 shadow">
+                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQqo3n9niQ3ruAV3ipWY1MIvF5FVlKhurZkKgvsqHWiWXU6UDqKtjmxuwQ0yyIhNTYpRATuR9ZZPdDB/pubhtml?gid=0&single=true"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Música Favorita con Filtro -->
+    <section id="musica" class="mb-5">
+        <div class="container-inner">
+            <h3 class="section-title text-danger">
+                <i class="fa-solid fa-record-vinyl me-2"></i>Música Favorita
+            </h3>
+            <p class="opacity-75 mb-3">Filtra mis géneros, bandas y artistas favoritos por categoría en tiempo real:</p>
+            
+            <!-- Botones de filtrado para música -->
+            <div class="mb-4 d-flex gap-2 flex-wrap">
+                <button class="btn btn-outline-light btn-filter-music active" data-filter-music="todos">Ver Todos</button>
+                <button class="btn btn-outline-warning btn-filter-music" data-filter-music="rock">Rock / Alternativo</button>
+                <button class="btn btn-outline-danger btn-filter-music" data-filter-music="metal">Metal / Post-Hardcore</button>
+                <button class="btn btn-outline-info btn-filter-music" data-filter-music="pop">Pop / Electropop</button>
+                <button class="btn btn-outline-success btn-filter-music" data-filter-music="urbano">Urbano / Reggaetón</button>
+                <button class="btn btn-outline-primary btn-filter-music" data-filter-music="indie">Indie / Folk / Rock en Español</button>
+                
+            </div>
+                <div class="table-responsive">
+                    <table class="table custom-table mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="th-num">#</th>
+                                <th scope="col" class="th-artist">Artista / Grupo</th>
+                                <th scope="col" class="th-genre">Género</th>
+                                <th scope="col" class="th-desc">Canciones / Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaMusica">
+                            <!-- Rock / Alternativo -->
+                            <tr class="music-row music-item" data-genero="rock">
+                                <td><span class="music-rank-badge music-rank-1">1</span></td>
+                                <td class="fw-bold text-warning">Linkin Park</td>
+                                <td><span class="badge bg-warning text-dark">Rock / Nu Metal</span></td>
+                                <td class="music-desc">In the End, Numb, Castle of Glass</td>
+                            </tr>
+                            <tr class="music-row music-item" data-genero="rock">
+                                <td><span class="music-rank-badge music-rank-2">2</span></td>
+                                <td class="fw-bold text-warning">Three Days Grace</td>
+                                <td><span class="badge bg-warning text-dark">Rock Alternativo</span></td>
+                                <td class="music-desc">Animal I Have Become, Pain</td>
+                            </tr>
+                            <tr class="music-row music-item" data-genero="rock">
+                                <td><span class="music-rank-badge music-rank-3">3</span></td>
+                                <td class="fw-bold text-warning">Avenged Sevenfold</td>
+                                <td><span class="badge bg-warning text-dark">Hard Rock / Metal</span></td>
+                                <td class="music-desc">Nightmare, Hail to the King</td>
+                            </tr>
+                            <tr class="music-row music-item" data-genero="rock">
+                                <td><span class="music-rank-badge music-rank-4">4</span></td>
+                                <td class="fw-bold text-warning">OneRepublic</td>
+                                <td><span class="badge bg-warning text-dark">Pop Rock</span></td>
+                                <td class="music-desc">Counting Stars, Secrets</td>
+                            </tr>
+                            <tr class="music-row music-item" data-genero="rock">
+                                <td><span class="music-rank-badge music-rank-1">5</span></td>
+                                <td class="fw-bold text-warning">Paramore</td>
+             
