@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaStore | Catálogo Profesional</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts para un look moderno -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+    <!-- Navegación Superior -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <!-- Disparador oculto: Triple clic sobre el logo abre el Login Admin -->
+            <div class="logo-wrapper">
+                <span class="logo" id="secret-logo-trigger" title="NovaStore">Catalogos<span>Facil</span></span>
+            </div>
+            
+            <div class="nav-actions">
+                <!-- Estado de Admin (SÓLO se muestra cuando el admin ya inició sesión) -->
+                <div id="admin-session-badge" class="hidden">
+                    <span class="badge-role">Modo Administrador</span>
+                    <button id="btn-logout-admin" class="btn btn-danger btn-sm">Cerrar Sesión</button>
+                </div>
+
+                <!-- Carrito Público -->
+                <button id="btn-toggle-cart" class="btn btn-primary btn-cart-toggle">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"></path></svg>
+                    <span>Carrito</span>
+                    <span id="cart-counter" class="cart-badge-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Banner para darle vida y dinamismo a la tienda -->
+    <header class="hero-banner">
+        <div class="container hero-content">
+            <h1>Encuentra la mejor tecnología para tus proyectos</h1>
+            <p>Explora nuestro catálogo con envíos inmediatos y ofertas exclusivas.</p>
+        </div>
+    </header>
+
+    <!-- Panel de Administración (Privado / Oculto por defecto) -->
+    <section id="admin-panel" class="admin-panel hidden">
+        <div class="container">
+            <h2>Panel de Administración de Productos</h2>
+            <form id="product-form" class="admin-form">
+                <input type="hidden" id="form-product-id">
+                
+                <div class="form-group">
+                    <label>Título:</label>
+                    <input type="text" id="form-title" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Categoría:</label>
+                    <input type="text" id="form-category" required list="category-list">
+                    <datalist id="category-list"></datalist>
+                </div>
+
+                <div class="form-group">
+                    <label>Precio ($):</label>
+                    <input type="number" id="form-price" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Stock:</label>
+                    <input type="number" id="form-stock" required>
+                </div>
+
+                <div class="form-group">
+                    <label>URL Imagen:</label>
+                    <input type="url" id="form-image" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Descripción:</label>
+                    <textarea id="form-description" rows="2" required></textarea>
+                </div>
+
+                <div class="form-actions full-width">
+                    <button type="submit" id="btn-save-product" class="btn btn-success">Guardar Producto</button>
+                    <button type="button" id="btn-cancel-edit" class="btn btn-secondary hidden">Cancelar Edición</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Filtros Públicos -->
+    <section class="controls-section">
+        <div class="container controls-grid">
+            <div class="search-box">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="search-input" placeholder="Buscar productos por nombre o descripción...">
+            </div>
+            
+            <select id="category-filter">
+                <option value="">Todas las categorías</option>
+            </select>
+
+            <select id="sort-select">
+                <option value="default">Orden por defecto</option>
+                <option value="price-asc">Precio: Menor a Mayor</option>
+                <option value="price-desc">Precio: Mayor a Menor</option>
+                <option value="name-asc">Nombre: A-Z</option>
+                <option value="name-desc">Nombre: Z-A</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- Catálogo de Productos -->
+    <main class="container">
+        <div id="catalog-grid" class="catalog-grid"></div>
+    </main>
+
+    <!-- Sidebar Carrito de Compras -->
+    <aside id="cart-sidebar" class="cart-sidebar hidden">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <button id="btn-close-cart" class="btn-icon">&times;</button>
+        </div>
+        <div id="cart-items" class="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: $<span id="cart-total-amount">0.00</span></div>
+            <button id="btn-open-checkout" class="btn btn-success full-width">Procesar Compra</button>
+        </div>
+    </aside>
+
+    <!-- Modal Checkout (Cliente) -->
+    <div id="checkout-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3>Finalizar Compra</h3>
+            <form id="checkout-form" style="margin-top: 1rem;">
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label>Nombre Completo:</label>
+                    <input type="text" id="checkout-name" required placeholder="Juan Pérez">
+                </div>
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label>Correo Electrónico:</label>
+                    <input type="email" id="checkout-email" required placeholder="juan@email.com">
+                </div>
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label>Dirección de Envío:</label>
+                    <input type="text" id="checkout-address" required placeholder="Calle 123 #45-67">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Método de Pago:</label>
+                    <select id="checkout-payment">
+                        <option value="card">Tarjeta de Crédito / Débito</option>
+                        <option value="transfer">Transferencia Bancaria</option>
+                        <option value="cash">Pago contra entrega</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success full-width">Pagar y Confirmar Pedido</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Detalle del Producto -->
+    <div id="detail-modal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div id="detail-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Modal OCULTO de Login (Triple clic en logo o Ctrl+Alt+A) -->
+    <div id="admin-login-modal" class="modal-backdrop hidden">
+        <div class="modal-content modal-sm">
+            <button class="modal-close">&times;</button>
+            <h3>Inicio de Sesión Admin</h3>
+            <form id="admin-login-form" style="margin-top: 1rem;">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Usuario:</label>
+                    <input type="text" id="admin-user" required autocomplete="off">
+                </div>
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label>Contraseña:</label>
+                    <input type="password" id="admin-pass" required>
+                </div>
+                <p id="admin-login-error" class="error-msg hidden">Credenciales inválidas</p>
+                <button type="submit" class="btn btn-primary full-width">Ingresar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

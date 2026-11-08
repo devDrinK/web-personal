@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TITAN GYM - Sistema de Gestión</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- FontAwesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navegación Minimalista -->
+  <header class="navbar">
+    <div class="logo">TITAN<span>GYM</span></div>
+    <button class="nav-toggle" id="btn-toggle-menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <nav class="nav-links" id="main-nav">
+      <a href="#planes" class="nav-link-view">Planes</a>
+      <a href="#armador" class="nav-link-view">Plan a Medida</a>
+      <a href="#tienda" class="nav-link-view">Tienda</a>
+      <a href="#registro" class="nav-link-view">Inscripción</a>
+      <a href="#contacto" class="nav-link-view">Contacto</a>
+      <a href="#" id="btn-switch-admin" class="btn-admin-nav"><i class="fa-solid fa-lock"></i> Admin Panel</a>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <!-- ================= VISTA PRINCIPAL (USUARIO) ================= -->
+    <div id="user-view" class="view-section">
+      <!-- Hero / Banner de Bienvenida -->
+      <section class="hero">
+        <h1>SISTEMA DE GESTIÓN Y MEMBRESÍAS</h1>
+        <p>Transforma tu cuerpo, gestiona tu progreso.</p>
+      </section>
+
+      <!-- Componente: Tarifas / Cards Responsivas -->
+      <section id="planes" class="section">
+        <h2 class="section-title">Planes Predeterminados</h2>
+        <div class="cards-grid">
+          <div class="card">
+            <div class="card-badge">Básico</div>
+            <h3>Plan Starter</h3>
+            <p class="price">$25 <span>/ mes</span></p>
+            <ul>
+              <li><i class="fa-solid fa-check"></i> Acceso a zona de pesas</li>
+              <li><i class="fa-solid fa-check"></i> Vestidores y duchas</li>
+              <li><i class="fa-solid fa-xmark"></i> Entrenador personal</li>
+            </ul>
+            <button class="btn btn-primary select-plan" data-plan="Plan Starter" data-precio="25">Seleccionar Plan</button>
+          </div>
+
+          <div class="card featured">
+            <div class="card-badge">Más Popular</div>
+            <h3>Plan Pro Titan</h3>
+            <p class="price">$45 <span>/ mes</span></p>
+            <ul>
+              <li><i class="fa-solid fa-check"></i> Acceso ilimitado 24/7</li>
+              <li><i class="fa-solid fa-check"></i> Clases grupales incluidas</li>
+              <li><i class="fa-solid fa-check"></i> 1 Evaluación física al mes</li>
+            </ul>
+            <button class="btn btn-accent select-plan" data-plan="Plan Pro Titan" data-precio="45">Seleccionar Plan</button>
+          </div>
+
+          <div class="card">
+            <div class="card-badge">VIP</div>
+            <h3>Plan Elite</h3>
+            <p class="price">$70 <span>/ mes</span></p>
+            <ul>
+              <li><i class="fa-solid fa-check"></i> Acceso total + Áreas VIP</li>
+              <li><i class="fa-solid fa-check"></i> Entrenador personalizado</li>
+              <li><i class="fa-solid fa-check"></i> Asesoría nutricional continua</li>
+            </ul>
+            <button class="btn btn-primary select-plan" data-plan="Plan Elite" data-precio="70">Seleccionar Plan</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- NUEVO: Armador Dinámico de Plan Personalizado -->
+      <section id="armador" class="section card-panel">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-sliders"></i> Diseña tu Plan a Medida</h2>
+        </div>
+        <p class="section-subtitle">Selecciona tus preferencias y calcula la tarifa de tu membresía personalizada en tiempo real.</p>
+        
+        <div class="custom-plan-builder">
+          <div class="builder-options">
+            <div class="form-group">
+              <label for="custom-dias">Días de entrenamiento por semana:</label>
+              <select id="custom-dias">
+                <option value="15">2 Días por semana ($15/mes)</option>
+                <option value="25" selected>4 Días por semana ($25/mes)</option>
+                <option value="35">Pase Libre / Todos los días ($35/mes)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Servicios adicionales:</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" class="custom-addon" data-cost="15" value="Entrenador Personal"> Entrenador Personal (+$15)
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" class="custom-addon" data-cost="10" value="Nutricionista"> Nutricionista (+$10)
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" class="custom-addon" data-cost="8" value="Acceso Sauna & Spa"> Acceso Sauna & Spa (+$8)
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" class="custom-addon" data-cost="5" value="Casillero Privado"> Casillero Privado (+$5)
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="builder-summary">
+            <h3>Resumen de tu Plan</h3>
+            <div class="custom-price-display">
+              <span id="custom-total">$25</span> <span>/ mes</span>
+            </div>
+            <ul id="custom-features-list">
+              <li>4 Días por semana</li>
+            </ul>
+            <button class="btn btn-accent btn-full" id="btn-select-custom-plan">Inscribirme con este Plan</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- NUEVO: Tienda de Productos / Suplementos -->
+      <section id="tienda" class="section">
+        <h2 class="section-title"><i class="fa-solid fa-store"></i> Tienda de Suplementos & Equipamiento</h2>
+        <div class="cards-grid">
+          <div class="card store-card">
+            <i class="fa-solid fa-prescription-bottle-medical product-icon"></i>
+            <h3>Proteína Whey 2lb</h3>
+            <p class="product-desc">Suplemento para recuperación muscular acelerada.</p>
+            <p class="price">$35</p>
+            <button class="btn btn-primary add-to-cart" data-name="Proteína Whey 2lb" data-price="35">Agregar al Carrito</button>
+          </div>
+
+          <div class="card store-card">
+            <i class="fa-solid fa-bolt product-icon"></i>
+            <h3>Pre-Entreno Nitro</h3>
+            <p class="product-desc">Energía y enfoque para tus entrenamientos intensos.</p>
+            <p class="price">$22</p>
+            <button class="btn btn-primary add-to-cart" data-name="Pre-Entreno Nitro" data-price="22">Agregar al Carrito</button>
+          </div>
+
+          <div class="card store-card">
+            <i class="fa-solid fa-bottle-water product-icon"></i>
+            <h3>Shaker Titan Gym</h3>
+            <p class="product-desc">Vaso mezclador libre de BPA 700ml.</p>
+            <p class="price">$10</p>
+            <button class="btn btn-primary add-to-cart" data-name="Shaker Titan Gym" data-price="10">Agregar al Carrito</button>
+          </div>
+
+          <div class="card store-card">
+            <i class="fa-solid fa-mattress-pillow product-icon"></i>
+            <h3>Cinta Strap Levantes</h3>
+            <p class="product-desc">Agarre reforzado para levantamiento pesado.</p>
+            <p class="price">$12</p>
+            <button class="btn btn-primary add-to-cart" data-name="Cinta Strap Levantes" data-price="12">Agregar al Carrito</button>
+          </div>
+        </div>
+
+        <!-- Carrito Flotante / Resumen -->
+        <div id="cart-drawer" class="card-panel cart-summary" style="display: none; margin-top: 1.5rem;">
+          <h3><i class="fa-solid fa-cart-shopping"></i> Tu Carrito (<span id="cart-count">0</span>)</h3>
+          <ul id="cart-items-list"></ul>
+          <div class="cart-total-bar">
+            <strong>Total a Pagar: $<span id="cart-total-price">0</span></strong>
+            <button class="btn btn-accent" id="btn-checkout">Procesar Compra</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Formulario con Validación e Interactividad jQuery -->
+      <section id="registro" class="section card-panel">
+        <div class="panel-header">
+          <h2>Registro de Nuevo Socio</h2>
+          <button class="btn-icon" id="btn-toggle-form" title="Plegar/Desplegar Formulario">
+            <i class="fa-solid fa-chevron-up"></i>
+          </button>
+        </div>
+
+        <!-- Banner de Notificación -->
+        <div id="alert-message" class="alert hidden"></div>
+
+        <form id="gym-form" class="form-body" novalidate>
+          <div class="form-group">
+            <label for="nombre">Nombre Completo *</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ej. Juan Pérez">
+            <small class="error-text"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Correo Electrónico *</label>
+            <input type="email" id="email" name="email" placeholder="ejemplo@correo.com">
+            <small class="error-text"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono *</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Ej. 70000000">
+            <small class="error-text"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="plan-seleccionado">Plan Elegido *</label>
+            <select id="plan-seleccionado" name="plan">
+              <option value="">-- Selecciona un plan --</option>
+              <option value="Plan Starter">Plan Starter ($25/mes)</option>
+              <option value="Plan Pro Titan">Plan Pro Titan ($45/mes)</option>
+              <option value="Plan Elite">Plan Elite ($70/mes)</option>
+              <!-- Las opciones personalizadas se agregarán dinámicamente aquí -->
+            </select>
+            <small class="error-text"></small>
+          </div>
+
+          <button type="submit" class="btn btn-accent btn-full">Completar Registro</button>
+        </form>
+      </section>
+    </div>
+
+    <!-- ================= VISTA DE ADMINISTRADOR ================= -->
+    <div id="admin-view" class="view-section" style="display: none;">
+      <div class="admin-top-bar">
+        <h2><i class="fa-solid fa-gauge-high"></i> Panel de Control - Administrador</h2>
+        <button class="btn btn-primary" id="btn-back-user"><i class="fa-solid fa-arrow-left"></i> Volver al Sitio</button>
+      </div>
+
+      <!-- Tarjetas de Estadísticas Rápidas -->
+      <div class="admin-stats-grid">
+        <div class="stat-card">
+          <i class="fa-solid fa-users"></i>
+          <div>
+            <h4 id="stat-total-socios">0</h4>
+            <p>Socios Registrados</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa-solid fa-dollar-sign"></i>
+          <div>
+            <h4 id="stat-ingresos">$0</h4>
+            <p>Ingresos Mensuales Estimados</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <div>
+            <h4 id="stat-ventas-tienda">$0</h4>
+            <p>Ventas de Tienda</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla de Gestión de Socios -->
+      <section class="section card-panel">
+        <div class="panel-header">
+          <h3><i class="fa-solid fa-list-check"></i> Listado de Socios Registrados</h3>
+          <div class="admin-actions">
+            <input type="text" id="search-socio" placeholder="Buscar socio..." class="admin-search">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Teléfono</th>
+                <th>Plan / Detalle</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="socios-table-body">
+              <tr class="empty-row">
+                <td colspan="6" style="text-align: center; color: var(--text-secondary);">No hay socios registrados todavía. Completa el formulario de inscripción.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Tabla de Historial de Ventas de Tienda -->
+      <section class="section card-panel">
+        <div class="panel-header">
+          <h3><i class="fa-solid fa-receipt"></i> Historial de Ventas de Productos</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID Venta</th>
+                <th>Productos</th>
+                <th>Total ($)</th>
+                <th>Fecha / Hora</th>
+              </tr>
+            </thead>
+            <tbody id="ventas-table-body">
+              <tr>
+                <td colspan="4" style="text-align: center; color: var(--text-secondary);">No hay ventas registradas en la tienda.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Footer con Redes Sociales con Enlaces Reales (target="_blank") y Datos Formales -->
+  <footer id="contacto" class="footer">
+    <div class="footer-container">
+      <div class="footer-info">
+        <h3>TITAN GYM S.R.L.</h3>
+        <p>NIT / RIF: 1029384756</p>
+        <p><i class="fa-solid fa-location-dot"></i> Av. Principal #450, Zona Central</p>
+        <p><i class="fa-solid fa-envelope"></i> contacto@titangym.com</p>
+        <p><i class="fa-solid fa-phone"></i> +591 2 2345678</p>
+      </div>
+
+      <div class="footer-social">
+        <h4>Síguenos en Redes</h4>
+        <div class="social-links">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon" data-name="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon" data-name="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="social-icon" data-name="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://wa.me/59170000000" target="_blank" rel="noopener noreferrer" class="social-icon" data-name="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+        <p id="social-feedback" class="social-feedback"></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 TITAN GYM S.R.L. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Carga de jQuery mediante CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
