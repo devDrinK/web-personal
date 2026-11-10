@@ -2,7 +2,7 @@
   "name": "Josue Marcelo Vasquez Zeballos | Web Personal PWA",
   "short_name": "Web Personal",
   "description": "Portafolio y sitio web personal interactivo de Josue Marcelo Vasquez Zeballos en versión PWA.",
-  "start_url": "./index2.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
@@ -12,25 +12,25 @@
   "categories": ["portfolio", "education", "utilities"],
   "icons": [
     {
-      "src": "img/icons/icon-192.png",
+      "src": "../img/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "img/icons/icon-512.png",
+      "src": "../img/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "img/icons/icon-maskable-192.png",
+      "src": "../img/icons/icon-maskable-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "img/icons/icon-maskable-512.png",
+      "src": "../img/icons/icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

@@ -1,5 +1,102 @@
+// =======================================================
+// 0.0 SIMULACIÓN DE HIDRATACIÓN (Guía UPDS - SSR / PWA)
+// =======================================================
+/**
+ * Realiza la hidratación progresiva sobre la estructura HTML inicial estática.
+ * Conecta controladores de eventos jQuery/DOM sin redibujar la pantalla.
+ */
+function hidratarInterfaz() {
+    const contenedor = document.getElementById('contenedorMenu');
+
+    // 1. Verificar si el contenedor ya se encuentra hidratado (data-hidratado == 'true')
+    // Si ya fue procesado, se detiene para evitar duplicidad de listeners y estados
+    if (!contenedor || contenedor.getAttribute('data-hidratado') === 'true') {
+        console.log('[Hidratación] El contenedor ya está hidratado o no existe en el DOM.');
+        return;
+    }
+
+    // Selectores jQuery del contenedor, botón y menú desplegable
+    const $contenedor = $('#contenedorMenu');
+    const $btn = $('#btnMenu, #btnHidratar');
+    const $navMenu = $('#navMenu, #menuDesplegable');
+
+    // 2. Limpieza previa de eventos utilizando .off() antes de adjuntar nuevos listeners interactivos
+    $btn.off('click');
+
+    // 3. Conectar de manera transparente los controladores de eventos al DOM existente sin volver a dibujar la pantalla
+    $btn.on('click', function(e) {
+        e.preventDefault();
+        // Desplegar menú interactivo mediante animación suave con slideToggle
+        $navMenu.slideToggle(300);
+    });
+
+    // 4. Actualizar los textos y elementos visuales de manera dinámica
+    // Cambiar el texto del botón estático "Cargando Menú..." a "Menú Interactivo (Hidratado)"
+    if ($('#textoBtnMenu').length) {
+        $('#textoBtnMenu').text('Menú Interactivo (Hidratado)');
+        $('#iconoBtnMenu').removeClass('fa-spinner fa-spin').addClass('fa-bars');
+    } else {
+        $btn.html('<i class="fa-solid fa-bars me-2"></i>Menú Interactivo (Hidratado)');
+    }
+
+    // Actualizar badges de estado y descripciones
+    const badge = document.getElementById('estadoHidratacionBadge');
+    if (badge) {
+        badge.className = 'badge bg-success px-3 py-2 fs-6';
+        badge.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Estado: Menú Interactivo (Hidratado)';
+    }
+
+    const subtitulo = document.getElementById('subtituloMenu');
+    if (subtitulo) {
+        subtitulo.textContent = 'Eventos y reactividad jQuery conectados sin redibujar el DOM.';
+    }
+
+    // Mostrar botón de reinicio para que el usuario pueda probar el flujo cuantas veces desee
+    $('#btnReiniciarHidratacion').show().off('click').on('click', function() {
+        // Regresar al estado estático inicial
+        $navMenu.hide();
+        $btn.off('click');
+        $contenedor.attr('data-hidratado', 'false');
+        contenedor.setAttribute('data-hidratado', 'false');
+
+        if ($('#textoBtnMenu').length) {
+            $('#textoBtnMenu').text('Cargando Menú...');
+            $('#iconoBtnMenu').removeClass('fa-bars').addClass('fa-spinner fa-spin');
+        } else {
+            $btn.html('<i class="fa-solid fa-spinner fa-spin me-2"></i>Cargando Menú...');
+        }
+
+        if (badge) {
+            badge.className = 'badge bg-secondary px-3 py-2 fs-6';
+            badge.innerHTML = '<i class="fa-solid fa-hourglass-start me-1"></i> Estado: Estático (Sin Hidratar)';
+        }
+
+        if (subtitulo) {
+            subtitulo.textContent = 'Estructura HTML plana servida inicialmente.';
+        }
+
+        $(this).hide();
+
+        // Reprogramar hidratación en 500ms
+        setTimeout(hidratarInterfaz, 500);
+    });
+
+    // 5. Actualizar el atributo de control al finalizar el proceso a data-hidratado="true"
+    $contenedor.attr('data-hidratado', 'true');
+    contenedor.setAttribute('data-hidratado', 'true');
+
+    console.log('[Hidratación] Interfaz hidratada exitosamente a data-hidratado="true".');
+}
+
+// Hacer accesible la función globalmente
+window.hidratarInterfaz = hidratarInterfaz;
+
 // Esperamos a que el DOM esté totalmente cargado
 document.addEventListener('DOMContentLoaded', () => {
+
+    // Ejecución programada de la hidratación a los 500ms para simular la transición
+    // de una vista estática a una aplicación interactiva
+    setTimeout(hidratarInterfaz, 500);
 
     // =======================================================
     // 0. NAVEGACIÓN RESPONSIVA (Cierre automático en móvil)

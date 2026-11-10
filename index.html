@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sitio Web Personal</title>
 
-    <!-- PWA Meta Tags (Vincula el sitio principal a la PWA de index2.html) -->
+    <!-- PWA Meta Tags (Vincula el sitio principal a la PWA de pwa/index.html) -->
     <meta name="theme-color" content="#0f172a">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,26 +17,32 @@
     <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
     <link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
 
-    <!-- Web App Manifest (Configurado para que la app instalada abra index2.html) -->
-    <link rel="manifest" href="manifest.json">
+    <!-- Web App Manifest (ubicado en subcarpeta pwa/) -->
+    <link rel="manifest" href="pwa/manifest.json">
 
     <script>
-        // Si el usuario abre el sitio desde la app instalada (PWA standalone), redirigir directamente a index2.html
-        if (window.matchMedia('(display-mode: standalone)').matches && !window.location.pathname.endsWith('index2.html')) {
-            window.location.replace('index2.html');
+        // Si el usuario abre el sitio desde la app instalada (PWA standalone), abrir la versión PWA
+        if (window.matchMedia('(display-mode: standalone)').matches && !window.location.pathname.includes('/pwa/')) {
+            window.location.replace('pwa/index.html');
         }
     </script>
-    
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Inter:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Sistema Modular de Hidratación Progresiva (carga módulos bajo demanda, sin jQuery) -->
+    <script src="js/hidratacion.js"></script>
+
     <!-- HOJA DE ESTILOS PROPIA -->
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
     <!-- 1. Navbar Fija y Translúcida con Menú Hamburguesa y Toggle de Tema -->
@@ -45,9 +52,10 @@
                 <i class="fa-solid fa-terminal text-warning flex-shrink-0"></i>
                 <span class="brand-name">JOSUE MARCELO VASQUEZ ZEBALLOS</span>
             </a>
-            
-            <!-- Botón Hamburguesa[cite: 5, 8] -->
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+            <!-- Botón Hamburguesa -->
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -59,16 +67,21 @@
                     <li class="nav-item"><a class="nav-link" href="#horario">Horario</a></li>
                     <li class="nav-item"><a class="nav-link" href="#musica">Música</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
-                    <li class="nav-item"><a class="nav-link text-warning fw-semibold" href="index2.html" title="Abrir versión PWA Móvil"><i class="fa-solid fa-mobile-screen-button me-1"></i>PWA Móvil</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning fw-semibold" href="pwa/index.html"
+                            title="Abrir versión PWA Móvil"><i class="fa-solid fa-mobile-screen-button me-1"></i>PWA
+                            Móvil</a></li>
                 </ul>
 
-                <!-- Botón Modo Oscuro / Claro[cite: 2, 8] -->
-                <button id="themeBtn" class="btn btn-outline-warning btn-sm ms-lg-3 mt-2 mt-lg-0 rounded-pill px-3">
+                <!-- Botón Modo Oscuro / Claro (módulo 'tema' se hidrata bajo demanda) -->
+                <button id="themeBtn" class="btn btn-outline-warning btn-sm ms-lg-3 mt-2 mt-lg-0 rounded-pill px-3"
+                    data-modulo="tema">
                     <i class="fa-solid fa-moon me-1"></i> Modo Claro
                 </button>
 
-                <!-- Botón Instalar PWA (visible cuando el navegador detecta que es instalable) -->
-                <button id="pwaInstallBtn" class="btn btn-warning btn-sm ms-lg-2 mt-2 mt-lg-0 rounded-pill px-3 d-none fw-bold" title="Instalar como aplicación">
+                <!-- Botón Instalar PWA -->
+                <button id="pwaInstallBtn"
+                    class="btn btn-warning btn-sm ms-lg-2 mt-2 mt-lg-0 rounded-pill px-3 d-none fw-bold"
+                    title="Instalar como aplicación">
                     <i class="fa-solid fa-download me-1"></i> Instalar PWA
                 </button>
             </div>
@@ -81,34 +94,111 @@
     <!-- Contenido Principal -->
     <div class="container py-4">
 
+        <!-- SIMULACIÓN DE HIDRATACIÓN (Requerimiento de la Guía de Estudio UPDS: Interfaz Estática -> Hidratada) -->
+        <section id="hidratacion-section" class="mb-5" data-modulo="menu">
+            <div class="glass-card p-4 border border-warning">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                    <h3 class="section-title text-warning mb-0">
+                        <i class="fa-solid fa-bolt me-2"></i>Simulación de Hidratación (Hydration en HTML)
+                    </h3>
+                    <span id="estadoHidratacionBadge" class="badge bg-secondary px-3 py-2 fs-6">
+                        <i class="fa-solid fa-hourglass-start me-1"></i> Estado: Estático (Sin Hidratar)
+                    </span>
+                </div>
+                <p class="opacity-75 mb-3">
+                    Estructura HTML inicial plana para lograr carga ultrarrápida. Al ejecutarse el script, se conecta la
+                    interactividad al DOM sin redibujar la pantalla:
+                </p>
+
+                <!-- Contenedor inicial estático con data-hidratado="false" para control de estado -->
+                <div id="contenedorMenu" data-hidratado="false"
+                    class="p-3 bg-dark bg-opacity-50 rounded-3 border border-secondary">
+                    <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3">
+                        <div>
+                            <h5 id="tituloMenuEstatico" class="text-light mb-1">
+                                <i class="fa-solid fa-layer-group text-warning me-2"></i>Menú Principal
+                            </h5>
+                            <small id="subtituloMenu" class="text-secondary">Estructura HTML plana servida
+                                inicialmente.</small>
+                        </div>
+
+                        <!-- Botón preliminar con texto estático inicial "Cargando Menú..." -->
+                        <div class="d-flex align-items-center gap-2">
+                            <button id="btnMenu" class="btn btn-warning fw-bold px-4 shadow-sm" type="button">
+                                <i class="fa-solid fa-spinner fa-spin me-2" id="iconoBtnMenu"></i><span
+                                    id="textoBtnMenu">Cargando Menú...</span>
+                            </button>
+                            <button id="btnReiniciarHidratacion" class="btn btn-sm btn-outline-secondary" type="button"
+                                title="Reiniciar simulación de hidratación" style="display: none;">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Menú interactivo oculto inicialmente que se despliega con slideToggle tras hidratar -->
+                    <div id="navMenu" style="display: none;" class="mt-3 pt-3 border-top border-secondary">
+                        <p class="text-success fw-semibold mb-2">
+                            <i class="fa-solid fa-circle-check me-1"></i> Controladores de eventos conectados al DOM
+                            existente (sin redibujar)
+                        </p>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="#inicio" class="btn btn-sm btn-outline-light"><i
+                                    class="fa-solid fa-house me-1"></i> Ir a Inicio</a>
+                            <a href="#intereses" class="btn btn-sm btn-outline-light"><i
+                                    class="fa-solid fa-heart me-1"></i> Intereses</a>
+                            <a href="#juegos" class="btn btn-sm btn-outline-light"><i
+                                    class="fa-solid fa-gamepad me-1"></i> Ver Juegos</a>
+                            <a href="#horario" class="btn btn-sm btn-outline-light"><i
+                                    class="fa-solid fa-calendar me-1"></i> Horario</a>
+                            <a href="#musica" class="btn btn-sm btn-outline-light"><i
+                                    class="fa-solid fa-music me-1"></i> Música</a>
+                            <a href="#contacto" class="btn btn-sm btn-outline-light"><i
+                                    class="fa-solid fa-envelope me-1"></i> Contacto</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 2. Carrusel de Fotos -->
         <section id="inicio" class="mb-5">
             <div id="mainCarousel" class="carousel slide shadow-lg glass-card p-2" data-bs-ride="carousel">
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop" class="d-block w-100" alt="Ingeniería de Sistemas - UPDS">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop"
+                            class="d-block w-100" alt="Ingeniería de Sistemas - UPDS">
                         <div class="carousel-caption">
-                            <h5 class="fw-bold text-warning"><i class="fa-solid fa-graduation-cap me-2"></i>Ingeniería de Sistemas</h5>
-                            <p class="mb-0 d-none d-sm-block">Estudiante de 6to semestre en la Universidad Privada Domingo Savio (UPDS).</p>
+                            <h5 class="fw-bold text-warning"><i class="fa-solid fa-graduation-cap me-2"></i>Ingeniería
+                                de Sistemas</h5>
+                            <p class="mb-0 d-none d-sm-block">Estudiante de 6to semestre en la Universidad Privada
+                                Domingo Savio (UPDS).</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg" class="d-block w-100" alt="El Señor de los Anillos">
+                        <img src="img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg" class="d-block w-100"
+                            alt="El Señor de los Anillos">
                         <div class="carousel-caption">
-                            <h5 class="fw-bold text-info"><i class="fa-solid fa-ring me-2"></i>El Señor de los Anillos</h5>
-                            <p class="mb-0 d-none d-sm-block">Cine de culto y fantasía épica: una obra maestra sobre valor, lealtad y aventura.</p>
+                            <h5 class="fw-bold text-info"><i class="fa-solid fa-ring me-2"></i>El Señor de los Anillos
+                            </h5>
+                            <p class="mb-0 d-none d-sm-block">Cine de culto y fantasía épica: una obra maestra sobre
+                                valor, lealtad y aventura.</p>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <img src="img/thegodfather.jpeg" class="d-block w-100" alt="El Padrino">
                         <div class="carousel-caption">
-                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-film me-2"></i>El Padrino (The Godfather)</h5>
-                            <p class="mb-0 d-none d-sm-block">Pasión por el cine clásico: el arte inigualable del drama, la estrategia y la familia.</p>
+                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-film me-2"></i>El Padrino (The
+                                Godfather)</h5>
+                            <p class="mb-0 d-none d-sm-block">Pasión por el cine clásico: el arte inigualable del drama,
+                                la estrategia y la familia.</p>
                         </div>
                     </div>
                 </div>
@@ -156,13 +246,14 @@
         </section>
 
         <!-- 4. Catálogo de Juegos Actualizado con Filtros y Tráilers en Modal -->
-        <section id="juegos" class="mb-5">
+        <section id="juegos" class="mb-5" data-modulo="juegos">
             <div class="glass-card p-4">
                 <h3 class="section-title text-info">
                     <i class="fa-solid fa-headset me-2"></i>Catálogo de Juegos Favoritos
                 </h3>
-                <p class="opacity-75 mb-3">Filtra mi colección por género o haz clic en cualquier juego para ver su tráiler oficial:</p>
-                
+                <p class="opacity-75 mb-3">Filtra mi colección por género o haz clic en cualquier juego para ver su
+                    tráiler oficial:</p>
+
                 <!-- Botones de filtro de juegos -->
                 <div class="mb-4 d-flex gap-2 flex-wrap">
                     <button class="btn btn-outline-light btn-filter active" data-filter="todos">Ver Todos</button>
@@ -173,10 +264,11 @@
                 </div>
 
                 <div class="row g-3" id="catalogoJuegos">
-                    
                     <!-- The Witcher 3 -->
                     <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="rpg">
-                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="The Witcher 3: Wild Hunt" data-video="https://www.youtube.com/embed/c0i8kPYtiiI" role="button">
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
+                            data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="The Witcher 3: Wild Hunt"
+                            data-video="https://www.youtube.com/embed/c0i8kPYtiiI" role="button">
                             <h5 class="fw-bold text-warning"><i class="fa-solid fa-dragon me-2"></i>The Witcher 3</h5>
                             <span class="badge bg-warning text-dark">RPG</span>
                             <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
@@ -184,7 +276,9 @@
                     </div>
                     <!-- God of War -->
                     <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="accion">
-                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="God of War (2018)" data-video="https://www.youtube.com/embed/K0u_kAWLJOA" role="button">
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
+                            data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="God of War (2018)"
+                            data-video="https://www.youtube.com/embed/K0u_kAWLJOA" role="button">
                             <h5 class="fw-bold text-danger"><i class="fa-solid fa-axe-battle me-2"></i>God of War</h5>
                             <span class="badge bg-danger text-white">Acción / Aventura</span>
                             <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
@@ -192,15 +286,20 @@
                     </div>
                     <!-- Red Dead Redemption 2 -->
                     <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="accion">
-                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Red Dead Redemption 2" data-video="https://www.youtube.com/embed/gmA6MrX81z4" role="button">
-                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-horse me-2"></i>Red Dead Redemption 2</h5>
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
+                            data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Red Dead Redemption 2"
+                            data-video="https://www.youtube.com/embed/gmA6MrX81z4" role="button">
+                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-horse me-2"></i>Red Dead Redemption 2
+                            </h5>
                             <span class="badge bg-danger text-white">Acción / Mundo Abierto</span>
                             <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
                         </div>
                     </div>
                     <!-- Resident Evil -->
                     <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="terror">
-                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Resident Evil 4 Remake" data-video="https://www.youtube.com/embed/E69q0gzt-sQ" role="button">
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
+                            data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Resident Evil 4 Remake"
+                            data-video="https://www.youtube.com/embed/E69q0gzt-sQ" role="button">
                             <h5 class="fw-bold text-success"><i class="fa-solid fa-ghost me-2"></i>Resident Evil</h5>
                             <span class="badge bg-success text-white">Terror / Survival</span>
                             <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
@@ -208,16 +307,24 @@
                     </div>
                     <!-- Final Fantasy -->
                     <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="rpg">
-                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Final Fantasy VII Rebirth" data-video="https://www.youtube.com/embed/H3s0uRLiIdM" role="button">
-                            <h5 class="fw-bold text-warning"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Final Fantasy</h5>
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
+                            data-bs-toggle="modal" data-bs-target="#modalTrailer"
+                            data-titulo="Final Fantasy VII Rebirth"
+                            data-video="https://www.youtube.com/embed/H3s0uRLiIdM" role="button">
+                            <h5 class="fw-bold text-warning"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Final
+                                Fantasy</h5>
                             <span class="badge bg-warning text-dark">RPG</span>
                             <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
                         </div>
                     </div>
                     <!-- The Legend of Zelda -->
                     <div class="col-12 col-sm-6 col-lg-4 card-juego" data-categoria="accion">
-                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="The Legend of Zelda: Tears of the Kingdom" data-video="https://www.youtube.com/embed/uHGShqcAHlQ" role="button">
-                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-shield-halved me-2"></i>The Legend of Zelda</h5>
+                        <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
+                            data-bs-toggle="modal" data-bs-target="#modalTrailer"
+                            data-titulo="The Legend of Zelda: Tears of the Kingdom"
+                            data-video="https://www.youtube.com/embed/uHGShqcAHlQ" role="button">
+                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-shield-halved me-2"></i>The Legend of
+                                Zelda</h5>
                             <span class="badge bg-danger text-white">Acción / Aventura</span>
                             <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler</p>
                         </div>
@@ -232,20 +339,17 @@
                 <div class="modal-content bg-dark text-light border border-secondary">
                     <div class="modal-header border-secondary">
                         <h5 class="modal-title fw-bold text-warning" id="modalTrailerLabel">Tráiler Oficial</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-0">
                         <div class="ratio ratio-16x9">
-                            <!-- El iframe se cargará dinámicamente sin autoplay -->
                             <iframe id="iframeTrailer" src="" title="YouTube video player" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-
-
 
         <!-- 5. Horario Google Sheets -->
         <section id="horario" class="mb-5">
@@ -254,7 +358,8 @@
                     <h3 class="section-title text-success mb-0">
                         <i class="fa-solid fa-calendar-days me-2"></i>Horario
                     </h3>
-                    <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
+                    <span
+                        class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
                         <i class="fa-solid fa-rotate me-1"></i> Infaltables diarios (Google Sheets)
                     </span>
                 </div>
@@ -262,29 +367,35 @@
                     Visualización directa de mi planificación semanal estructurada desde Google Sheets:
                 </p>
                 <div class="iframe-container ratio ratio-16x9 shadow">
-                    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQqo3n9niQ3ruAV3ipWY1MIvF5FVlKhurZkKgvsqHWiWXU6UDqKtjmxuwQ0yyIhNTYpRATuR9ZZPdDB/pubhtml?gid=0&single=true"></iframe>
+                    <iframe
+                        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQqo3n9niQ3ruAV3ipWY1MIvF5FVlKhurZkKgvsqHWiWXU6UDqKtjmxuwQ0yyIhNTYpRATuR9ZZPdDB/pubhtml?gid=0&single=true"></iframe>
                 </div>
             </div>
         </section>
 
         <!-- 6. Música Favorita con Filtro -->
-    <section id="musica" class="mb-5">
-        <div class="container-inner">
-            <h3 class="section-title text-danger">
-                <i class="fa-solid fa-record-vinyl me-2"></i>Música Favorita
-            </h3>
-            <p class="opacity-75 mb-3">Filtra mis géneros, bandas y artistas favoritos por categoría en tiempo real:</p>
-            
-            <!-- Botones de filtrado para música -->
-            <div class="mb-4 d-flex gap-2 flex-wrap">
-                <button class="btn btn-outline-light btn-filter-music active" data-filter-music="todos">Ver Todos</button>
-                <button class="btn btn-outline-warning btn-filter-music" data-filter-music="rock">Rock / Alternativo</button>
-                <button class="btn btn-outline-danger btn-filter-music" data-filter-music="metal">Metal / Post-Hardcore</button>
-                <button class="btn btn-outline-info btn-filter-music" data-filter-music="pop">Pop / Electropop</button>
-                <button class="btn btn-outline-success btn-filter-music" data-filter-music="urbano">Urbano / Reggaetón</button>
-                <button class="btn btn-outline-primary btn-filter-music" data-filter-music="indie">Indie / Folk / Rock en Español</button>
-                
-            </div>
+        <section id="musica" class="mb-5" data-modulo="musica">
+            <div class="container-inner">
+                <h3 class="section-title text-danger">
+                    <i class="fa-solid fa-record-vinyl me-2"></i>Música Favorita
+                </h3>
+                <p class="opacity-75 mb-3">Filtra mis géneros, bandas y artistas favoritos por categoría en tiempo real:
+                </p>
+
+                <div class="mb-4 d-flex gap-2 flex-wrap">
+                    <button class="btn btn-outline-light btn-filter-music active" data-filter-music="todos">Ver
+                        Todos</button>
+                    <button class="btn btn-outline-warning btn-filter-music" data-filter-music="rock">Rock /
+                        Alternativo</button>
+                    <button class="btn btn-outline-danger btn-filter-music" data-filter-music="metal">Metal /
+                        Post-Hardcore</button>
+                    <button class="btn btn-outline-info btn-filter-music" data-filter-music="pop">Pop /
+                        Electropop</button>
+                    <button class="btn btn-outline-success btn-filter-music" data-filter-music="urbano">Urbano /
+                        Reggaetón</button>
+                    <button class="btn btn-outline-primary btn-filter-music" data-filter-music="indie">Indie / Folk /
+                        Rock en Español</button>
+                </div>
                 <div class="table-responsive">
                     <table class="table custom-table mb-0">
                         <thead>
@@ -351,7 +462,6 @@
                                 <td><span class="badge bg-warning text-dark">Pop Rock</span></td>
                                 <td class="music-desc">Smile, Pass Me By</td>
                             </tr>
-
                             <!-- Metal / Post-Hardcore -->
                             <tr class="music-row music-item" data-genero="metal">
                                 <td><span class="music-rank-badge music-rank-2">10</span></td>
@@ -389,77 +499,85 @@
                                 <td><span class="badge bg-danger text-white">Christian Metal / Rock</span></td>
                                 <td class="music-desc">Monster, Hero</td>
                             </tr>
-
                             <!-- Pop / Electropop -->
                             <tr class="music-row music-item" data-genero="pop">
                                 <td><span class="music-rank-badge music-rank-4">16</span></td>
                                 <td class="fw-bold genre-pop">5 Seconds of Summer</td>
-                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Pop Rock</span></td>
+                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Pop Rock</span>
+                                </td>
                                 <td class="music-desc">Youngblood, Teeth</td>
                             </tr>
                             <tr class="music-row music-item" data-genero="pop">
                                 <td><span class="music-rank-badge music-rank-1">17</span></td>
                                 <td class="fw-bold genre-pop">MKTO</td>
-                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Pop / R&B</span></td>
+                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Pop / R&B</span>
+                                </td>
                                 <td class="music-desc">Classic, Thank You</td>
                             </tr>
                             <tr class="music-row music-item" data-genero="pop">
                                 <td><span class="music-rank-badge music-rank-2">18</span></td>
                                 <td class="fw-bold genre-pop">DNCE</td>
-                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Dance Pop / Funk</span></td>
+                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Dance Pop /
+                                        Funk</span></td>
                                 <td class="music-desc">Cake by the Ocean</td>
                             </tr>
                             <tr class="music-row music-item" data-genero="pop">
                                 <td><span class="music-rank-badge music-rank-3">19</span></td>
                                 <td class="fw-bold genre-pop">Daft Punk</td>
-                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Electrónica / House</span></td>
+                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Electrónica /
+                                        House</span></td>
                                 <td class="music-desc">Get Lucky, Instant Crush</td>
                             </tr>
                             <tr class="music-row music-item" data-genero="pop">
                                 <td><span class="music-rank-badge music-rank-4">20</span></td>
                                 <td class="fw-bold genre-pop">The Black Eyed Peas</td>
-                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Hip Hop / Pop</span></td>
+                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Hip Hop /
+                                        Pop</span></td>
                                 <td class="music-desc">I Gotta Feeling, Pump It</td>
                             </tr>
                             <tr class="music-row music-item" data-genero="pop">
                                 <td><span class="music-rank-badge music-rank-1">21</span></td>
                                 <td class="fw-bold genre-pop">Alec Benjamin</td>
-                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Pop Acústico / Indie</span></td>
+                                <td><span class="badge text-dark" style="background-color: #00f5d4;">Pop Acústico /
+                                        Indie</span></td>
                                 <td class="music-desc">Let Me Down Slowly, Water Fountain</td>
                             </tr>
-
                             <!-- Urbano / Reggaetón -->
                             <tr class="music-row music-item" data-genero="urbano">
                                 <td><span class="music-rank-badge music-rank-2">22</span></td>
                                 <td class="fw-bold genre-reggaeton">Daddy Yankee</td>
-                                <td><span class="badge text-white" style="background-color: #9333ea;">Reggaetón</span></td>
+                                <td><span class="badge text-white" style="background-color: #9333ea;">Reggaetón</span>
+                                </td>
                                 <td class="music-desc">Gasolina, Despacito, Con Calma</td>
                             </tr>
                             <tr class="music-row music-item" data-genero="urbano">
                                 <td><span class="music-rank-badge music-rank-3">23</span></td>
                                 <td class="fw-bold genre-reggaeton">Wisin y Yandel</td>
-                                <td><span class="badge text-white" style="background-color: #9333ea;">Reggaetón</span></td>
+                                <td><span class="badge text-white" style="background-color: #9333ea;">Reggaetón</span>
+                                </td>
                                 <td class="music-desc">Sexy Movimiento, Pam Pam</td>
                             </tr>
                             <tr class="music-row music-item" data-genero="urbano">
                                 <td><span class="music-rank-badge music-rank-4">24</span></td>
                                 <td class="fw-bold genre-reggaeton">Farruko</td>
-                                <td><span class="badge text-white" style="background-color: #9333ea;">Urbano / Reggaetón</span></td>
+                                <td><span class="badge text-white" style="background-color: #9333ea;">Urbano /
+                                        Reggaetón</span></td>
                                 <td class="music-desc">Pepas, Delincuente</td>
                             </tr>
                             <tr class="music-row music-item" data-genero="urbano">
                                 <td><span class="music-rank-badge music-rank-1">25</span></td>
                                 <td class="fw-bold genre-reggaeton">Chino y Nacho</td>
-                                <td><span class="badge text-white" style="background-color: #9333ea;">Pop Latino / Urbano</span></td>
+                                <td><span class="badge text-white" style="background-color: #9333ea;">Pop Latino /
+                                        Urbano</span></td>
                                 <td class="music-desc">Mi Niña Bonita, Me Voy Enamorando</td>
                             </tr>
                             <tr class="music-row music-item" data-genero="urbano">
                                 <td><span class="music-rank-badge music-rank-2">26</span></td>
                                 <td class="fw-bold genre-reggaeton">Major Lazer</td>
-                                <td><span class="badge text-white" style="background-color: #9333ea;">EDM / Dancehall / Urbano</span></td>
+                                <td><span class="badge text-white" style="background-color: #9333ea;">EDM / Dancehall /
+                                        Urbano</span></td>
                                 <td class="music-desc">Lean On, Cold Water</td>
                             </tr>
-
                             <!-- Indie / Folk / Rock en Español -->
                             <tr class="music-row music-item" data-genero="indie">
                                 <td><span class="music-rank-badge music-rank-3">27</span></td>
@@ -491,8 +609,7 @@
                                 <td><span class="badge bg-info text-dark">Rock Alternativo / Pop Rock</span></td>
                                 <td class="music-desc">Yendo a la Casa de Damián, Ya No Se Qué Hacer Conmigo</td>
                             </tr>
-                        
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -514,7 +631,8 @@
                     <div class="col">
                         <blockquote class="blockquote mb-0">
                             <p class="quote-text fs-4 fw-semibold mb-4">
-                                "El éxito no es definitivo, el fracaso no es fatal: <span class="quote-highlight">lo que cuenta es el valor para continuar</span>."
+                                "El éxito no es definitivo, el fracaso no es fatal: <span class="quote-highlight">lo que
+                                    cuenta es el valor para continuar</span>."
                             </p>
                             <div class="d-flex align-items-center gap-3 pt-3 border-top border-light border-opacity-10">
                                 <div class="author-avatar">
@@ -522,7 +640,8 @@
                                 </div>
                                 <div>
                                     <div class="fw-bold text-warning fs-5">Winston Churchill</div>
-                                    <div class="opacity-75 small">Estadista y Primer Ministro británico • Premio Nobel</div>
+                                    <div class="opacity-75 small">Estadista y Primer Ministro británico • Premio Nobel
+                                    </div>
                                 </div>
                             </div>
                         </blockquote>
@@ -532,13 +651,14 @@
         </section>
 
         <!-- 8. Formulario de Comentarios y Contacto Dinámico -->
-        <section id="contacto" class="mb-5">
+        <section id="contacto" class="mb-5" data-modulo="contacto">
             <div class="glass-card p-4">
                 <h3 class="section-title text-warning">
                     <i class="fa-solid fa-comments me-2"></i>Sección de Comentarios
                 </h3>
-                <p class="opacity-75 mb-3">Deja tu opinión o mensaje. Se validará y se publicará inmediatamente debajo:</p>
-                
+                <p class="opacity-75 mb-3">Deja tu opinión o mensaje. Se validará y se publicará inmediatamente debajo:
+                </p>
+
                 <form id="contactForm" class="row g-3" novalidate>
                     <!-- Nombre -->
                     <div class="col-md-6">
@@ -547,8 +667,7 @@
                         </label>
                         <input type="text" id="nombre"
                             class="form-control bg-dark bg-opacity-50 text-light border-secondary"
-                            placeholder="Ej. Juan Pérez"
-                            maxlength="60" autocomplete="off">
+                            placeholder="Ej. Juan Pérez" maxlength="60" autocomplete="off">
                         <div class="campo-error small mt-1" id="error-nombre"></div>
                     </div>
 
@@ -559,8 +678,7 @@
                         </label>
                         <input type="email" id="email"
                             class="form-control bg-dark bg-opacity-50 text-light border-secondary"
-                            placeholder="Ej. juan.perez@gmail.com"
-                            maxlength="80" autocomplete="off">
+                            placeholder="Ej. juan.perez@gmail.com" maxlength="80" autocomplete="off">
                         <div class="campo-error small mt-1" id="error-email"></div>
                     </div>
 
@@ -575,8 +693,7 @@
                             </span>
                             <input type="tel" id="telefono"
                                 class="form-control bg-dark bg-opacity-50 text-light border-secondary"
-                                placeholder="Ej. 75012345"
-                                maxlength="15" inputmode="numeric" autocomplete="off">
+                                placeholder="Ej. 75012345" maxlength="15" inputmode="numeric" autocomplete="off">
                         </div>
                         <div class="campo-error small mt-1" id="error-telefono"></div>
                     </div>
@@ -584,7 +701,8 @@
                     <!-- Tipo de Mensaje -->
                     <div class="col-md-6">
                         <label for="categoriaComentario" class="form-label small fw-bold">Tipo de Mensaje</label>
-                        <select id="categoriaComentario" class="form-select bg-dark bg-opacity-50 text-light border-secondary">
+                        <select id="categoriaComentario"
+                            class="form-select bg-dark bg-opacity-50 text-light border-secondary">
                             <option value="Sugerencia">💡 Sugerencia</option>
                             <option value="Felicitación">🎉 Felicitación</option>
                             <option value="Consulta">❓ Consulta</option>
@@ -619,7 +737,8 @@
 
                 <!-- CONTENEDOR DONDE SE VISUALIZARÁN LOS COMENTARIOS EN TIEMPO REAL -->
                 <div class="mt-4 pt-3 border-top border-secondary">
-                    <h5 class="comments-heading mb-3"><i class="fa-solid fa-rectangle-list me-2"></i>Comentarios Recientes (<span id="contadorComentarios">0</span>)</h5>
+                    <h5 class="comments-heading mb-3"><i class="fa-solid fa-rectangle-list me-2"></i>Comentarios
+                        Recientes (<span id="contadorComentarios">0</span>)</h5>
                     <div id="listaComentarios" class="d-flex flex-column gap-3">
                         <!-- Aquí se inyectarán dinámicamente las tarjetas de comentarios -->
                     </div>
@@ -638,13 +757,16 @@
                 </div>
                 <div class="col-md-4">
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="https://www.facebook.com" target="_blank" class="social-btn social-facebook" title="Facebook" aria-label="Facebook">
+                        <a href="https://www.facebook.com" target="_blank" class="social-btn social-facebook"
+                            title="Facebook" aria-label="Facebook">
                             <i class="fa-brands fa-facebook-f"></i>
                         </a>
-                        <a href="https://www.instagram.com" target="_blank" class="social-btn social-instagram" title="Instagram" aria-label="Instagram">
+                        <a href="https://www.instagram.com" target="_blank" class="social-btn social-instagram"
+                            title="Instagram" aria-label="Instagram">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
-                        <a href="https://www.github.com" target="_blank" class="social-btn social-github" title="GitHub" aria-label="GitHub">
+                        <a href="https://www.github.com" target="_blank" class="social-btn social-github" title="GitHub"
+                            aria-label="GitHub">
                             <i class="fa-brands fa-github"></i>
                         </a>
                     </div>
@@ -658,8 +780,21 @@
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- SCRIPT PROPIO -->
-    <script src="script.js" defer></script>
+
+    <!-- Registro del Service Worker (PWA en subcarpeta pwa/) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('pwa/sw.js', { scope: './' })
+                    .then(function (reg) { console.log('[SW] Registrado en scope:', reg.scope); })
+                    .catch(function (err) {
+                        navigator.serviceWorker.register('pwa/sw.js')
+                            .then(function (r) { console.log('[SW] Registrado en scope subcarpeta:', r.scope); })
+                            .catch(function (e) { console.warn('[SW] Error al registrar:', e); });
+                    });
+            });
+        }
+    </script>
 </body>
+
 </html>

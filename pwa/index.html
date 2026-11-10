@@ -13,9 +13,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Web Personal PWA">
 
-    <!-- Favicon e Iconos PWA -->
-    <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
-    <link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+    <!-- Favicon e Iconos PWA (rutas relativas a /pwa/ → subir a raíz) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/icons/favicon-32.png">
+    <link rel="apple-touch-icon" href="../img/icons/apple-touch-icon.png">
 
     <!-- Web App Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -25,11 +25,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Hoja de estilos del proyecto -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Hoja de estilos del proyecto (desde raíz, la PWA está en subcarpeta) -->
+    <link rel="stylesheet" href="../styles.css">
 
-    <!-- Enlace a jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Sistema Modular de Hidratación Progresiva (sin jQuery) -->
+    <script src="../js/hidratacion.js"></script>
 
     <style>
         /* ==========================================================================
@@ -63,7 +63,7 @@
                 radial-gradient(circle at 90% 85%, rgba(139, 92, 246, 0.22) 0%, transparent 55%),
                 radial-gradient(circle at 10% 85%, rgba(6, 182, 212, 0.16) 0%, transparent 50%),
                 linear-gradient(180deg, rgba(15, 23, 42, 0.88) 0%, rgba(7, 10, 18, 0.94) 100%),
-                url('img/wall.jpg');
+                url('../img/wall.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -589,7 +589,7 @@
                 </button>
 
                 <!-- Enlace al sitio completo con scroll -->
-                <a href="index.html" class="btn btn-outline-secondary btn-sm rounded-pill px-2 py-1 text-light" style="font-size: 0.72rem;" title="Ver versión con formulario de comentarios y scroll">
+                <a href="../index.html" class="btn btn-outline-secondary btn-sm rounded-pill px-2 py-1 text-light" style="font-size: 0.72rem;" title="Ver versión con formulario de comentarios y scroll">
                     <i class="fa-solid fa-desktop me-1"></i> Web Completa
                 </a>
 
@@ -639,7 +639,7 @@
                     </button>
                 </li>
                 <li class="pt-2 border-top border-secondary border-opacity-25 mt-1">
-                    <a href="index.html" class="mobile-nav-btn text-warning fw-bold text-decoration-none">
+                    <a href="../index.html" class="mobile-nav-btn text-warning fw-bold text-decoration-none">
                         <i class="fa-solid fa-desktop me-2"></i> Ir a Web Completa (con scroll)
                     </a>
                 </li>
@@ -658,7 +658,7 @@
                             <div class="col-12 col-lg-7">
                                 <div class="d-flex align-items-center gap-3 mb-2">
                                     <div class="avatar-wrapper flex-shrink-0">
-                                        <img src="img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg" alt="Josue Marcelo" class="avatar-glow">
+                                        <img src="../img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg" alt="Josue Marcelo" class="avatar-glow">
                                         <span class="online-dot" title="Disponible en línea"></span>
                                     </div>
                                     <div>
@@ -715,13 +715,13 @@
                                             </div>
                                         </div>
                                         <div class="carousel-item">
-                                            <img src="img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg" class="d-block w-100 carousel-pwa-img" alt="El Señor de los Anillos">
+                                            <img src="../img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg" class="d-block w-100 carousel-pwa-img" alt="El Señor de los Anillos">
                                             <div class="carousel-caption p-1 bg-dark bg-opacity-75 rounded-2 mb-2">
                                                 <small class="fw-bold text-info d-block">El Señor de los Anillos</small>
                                             </div>
                                         </div>
                                         <div class="carousel-item">
-                                            <img src="img/thegodfather.jpeg" class="d-block w-100 carousel-pwa-img" alt="El Padrino">
+                                            <img src="../img/thegodfather.jpeg" class="d-block w-100 carousel-pwa-img" alt="El Padrino">
                                             <div class="carousel-caption p-1 bg-dark bg-opacity-75 rounded-2 mb-2">
                                                 <small class="fw-bold text-danger d-block">El Padrino (The Godfather)</small>
                                             </div>
@@ -788,7 +788,7 @@
             </section>
 
             <!-- SECCIÓN 3: JUEGOS FAVORITOS -->
-            <section id="juegos" class="pwa-section">
+            <section id="juegos" class="pwa-section" data-modulo="juegos">
                 <div class="pwa-card-container">
                     <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
                         <h4 class="fw-bold mb-0 text-info"><i class="fa-solid fa-headset me-2"></i>Catálogo de Juegos</h4>
@@ -878,7 +878,7 @@
             </section>
 
             <!-- SECCIÓN 5: MÚSICA FAVORITA (CARRUSEL EN 2 FILAS CON GESTO DESLIZAR Y TARJETAS AMPLIAS) -->
-            <section id="musica" class="pwa-section">
+            <section id="musica" class="pwa-section" data-modulo="musica">
                 <div class="pwa-card-container">
                     <div class="hero-presentation p-3 p-md-4 rounded-4 border border-secondary border-opacity-30 mx-auto w-100" style="max-width: 980px;">
                         <!-- Cabecera de Música y Filtros -->
@@ -959,7 +959,7 @@
             </section>
 
             <!-- SECCIÓN 7: CONTACTARME (FORMULARIO ENFOCADO A CONTACTO DIRECTO) -->
-            <section id="contacto" class="pwa-section">
+            <section id="contacto" class="pwa-section" data-modulo="contacto">
                 <div class="pwa-card-container">
                     <div class="hero-presentation p-3 p-md-4 rounded-4 border border-secondary border-opacity-30 mx-auto w-100" style="max-width: 680px;">
                         <div class="d-flex align-items-center justify-content-between mb-2">
@@ -1052,322 +1052,14 @@
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Script de interacción general (filtros de dataset, modales) -->
-    <script src="script.js"></script>
-
-    <!-- Script PWA: Menú, Desvanecimiento, Carrusel de Música Amplio con Swipe Táctil y Contacto -->
+    <!-- Bootstrap ya cargado. Los módulos JS se cargan bajo demanda via hidratacion.js -->
     <script>
-        // CATÁLOGO COMPLETO DE LAS 28 CANCIONES/BANDAS DEL PROYECTO
-        const MUSIC_CATALOG = [
-            // Rock / Alternativo (9)
-            { rank: 1, artist: "Linkin Park", genre: "rock", genreLabel: "Rock / Nu Metal", badgeClass: "bg-warning text-dark", songs: "In the End, Numb, Castle of Glass" },
-            { rank: 2, artist: "Three Days Grace", genre: "rock", genreLabel: "Rock Alternativo", badgeClass: "bg-warning text-dark", songs: "Animal I Have Become, Pain" },
-            { rank: 3, artist: "Avenged Sevenfold", genre: "rock", genreLabel: "Hard Rock / Metal", badgeClass: "bg-warning text-dark", songs: "Nightmare, Hail to the King" },
-            { rank: 4, artist: "OneRepublic", genre: "rock", genreLabel: "Pop Rock", badgeClass: "bg-warning text-dark", songs: "Counting Stars, Secrets" },
-            { rank: 5, artist: "Paramore", genre: "rock", genreLabel: "Pop Punk / Rock", badgeClass: "bg-warning text-dark", songs: "Misery Business, Ain't It Fun" },
-            { rank: 6, artist: "Simple Plan", genre: "rock", genreLabel: "Pop Punk", badgeClass: "bg-warning text-dark", songs: "Welcome to My Life, Perfect" },
-            { rank: 7, artist: "Fall Out Boy", genre: "rock", genreLabel: "Rock Alternativo", badgeClass: "bg-warning text-dark", songs: "Centuries, Thnks fr the Mmrs" },
-            { rank: 8, artist: "Magic!", genre: "rock", genreLabel: "Reggae Fusion / Pop", badgeClass: "bg-warning text-dark", songs: "Rude" },
-            { rank: 9, artist: "R5", genre: "rock", genreLabel: "Pop Rock", badgeClass: "bg-warning text-dark", songs: "Smile, Pass Me By" },
-
-            // Metal / Post-Hardcore (6)
-            { rank: 10, artist: "Motionless in White", genre: "metal", genreLabel: "Metalcore / Industrial", badgeClass: "bg-danger text-white", songs: "Masterpiece, Cyberhex" },
-            { rank: 11, artist: "Bad Omens", genre: "metal", genreLabel: "Metal Alternativo", badgeClass: "bg-danger text-white", songs: "Just Pretend, The Death of Peace of Mind" },
-            { rank: 12, artist: "Falling in Reverse", genre: "metal", genreLabel: "Post-Hardcore / Rock", badgeClass: "bg-danger text-white", songs: "Popular Monster, Voices in My Head" },
-            { rank: 13, artist: "Set It Off", genre: "metal", genreLabel: "Rock Sinfónico", badgeClass: "bg-danger text-white", songs: "Wolf in Sheep's Clothing, Punching Bag" },
-            { rank: 14, artist: "A Day to Remember", genre: "metal", genreLabel: "Metalcore / Pop Punk", badgeClass: "bg-danger text-white", songs: "If It Means a Lot to You, Downfall" },
-            { rank: 15, artist: "Skillet", genre: "metal", genreLabel: "Rock / Alt Metal", badgeClass: "bg-danger text-white", songs: "Monster, Hero" },
-
-            // Pop / Electropop (6)
-            { rank: 16, artist: "5 Seconds of Summer", genre: "pop", genreLabel: "Pop Rock", badgeClass: "bg-info text-dark", songs: "Youngblood, Teeth" },
-            { rank: 17, artist: "MKTO", genre: "pop", genreLabel: "Pop / R&B", badgeClass: "bg-info text-dark", songs: "Classic, Thank You" },
-            { rank: 18, artist: "DNCE", genre: "pop", genreLabel: "Dance Pop / Funk", badgeClass: "bg-info text-dark", songs: "Cake by the Ocean" },
-            { rank: 19, artist: "Daft Punk", genre: "pop", genreLabel: "Electrónica / House", badgeClass: "bg-info text-dark", songs: "Get Lucky, Instant Crush" },
-            { rank: 20, artist: "The Black Eyed Peas", genre: "pop", genreLabel: "Hip Hop / Pop", badgeClass: "bg-info text-dark", songs: "I Gotta Feeling, Pump It" },
-            { rank: 21, artist: "Alec Benjamin", genre: "pop", genreLabel: "Pop Acústico / Indie", badgeClass: "bg-info text-dark", songs: "Let Me Down Slowly, Water Fountain" },
-
-            // Urbano / Reggaetón (5)
-            { rank: 22, artist: "Daddy Yankee", genre: "urbano", genreLabel: "Reggaetón", badgeClass: "bg-success text-white", songs: "Gasolina, Despacito, Con Calma" },
-            { rank: 23, artist: "Wisin y Yandel", genre: "urbano", genreLabel: "Reggaetón", badgeClass: "bg-success text-white", songs: "Sexy Movimiento, Pam Pam" },
-            { rank: 24, artist: "Farruko", genre: "urbano", genreLabel: "Urbano / Trap", badgeClass: "bg-success text-white", songs: "Pepas, Delincuente" },
-            { rank: 25, artist: "Chino y Nacho", genre: "urbano", genreLabel: "Pop Latino / Urbano", badgeClass: "bg-success text-white", songs: "Mi Niña Bonita, Me Voy Enamorando" },
-            { rank: 26, artist: "Major Lazer", genre: "urbano", genreLabel: "EDM / Dancehall", badgeClass: "bg-success text-white", songs: "Lean On, Cold Water" },
-
-            // Indie / Folk / Rock en Español (2)
-            { rank: 27, artist: "Jesse & Joy", genre: "indie", genreLabel: "Pop Latino / Folk", badgeClass: "bg-primary text-white", songs: "¡Corre!, Ecos de Amor" },
-            { rank: 28, artist: "Álvaro Soler", genre: "indie", genreLabel: "Pop Latino", badgeClass: "bg-primary text-white", songs: "Sofia, La Cintura" }
-        ];
-
-        // FUNCIÓN: RENDERIZAR CARRUSEL DE MÚSICA EN 2 FILAS CON TARJETAS AMPLIAS Y CÓMODAS
-        function renderMusicCarousel(filterGenre = 'todos') {
-            const isMobile = window.innerWidth < 768;
-            const itemsPerSlide = isMobile ? 2 : 4;
-            const colClass = isMobile ? 'col-12' : 'col-6';
-
-            const filtered = (filterGenre === 'todos')
-                ? MUSIC_CATALOG
-                : MUSIC_CATALOG.filter(m => m.genre === filterGenre);
-
-            const $carouselInner = $('#musicCarouselInner');
-            const $indicators = $('#musicCarouselIndicators');
-            const $counter = $('#musicPageCounter');
-
-            $carouselInner.empty();
-            $indicators.empty();
-
-            if (filtered.length === 0) {
-                $carouselInner.html('<div class="carousel-item active text-center py-4 text-muted fs-5">No hay canciones para este género.</div>');
-                $counter.text('0 canciones');
-                return;
-            }
-
-            const totalSlides = Math.ceil(filtered.length / itemsPerSlide);
-
-            for (let i = 0; i < totalSlides; i++) {
-                const slideItems = filtered.slice(i * itemsPerSlide, (i + 1) * itemsPerSlide);
-                const isActive = i === 0 ? 'active' : '';
-
-                let cardsHtml = '';
-                slideItems.forEach(item => {
-                    cardsHtml += `
-                        <div class="${colClass}">
-                            <div class="music-card-item p-3 h-100 d-flex align-items-center gap-3">
-                                <!-- Icono de Vinilo e Indicador de Rank -->
-                                <div class="flex-shrink-0 d-flex flex-column align-items-center justify-content-center text-center" style="min-width: 48px;">
-                                    <i class="fa-solid fa-compact-disc music-disc-icon"></i>
-                                    <span class="badge bg-secondary bg-opacity-75 text-warning mt-1 fw-bold font-monospace" style="font-size: 0.75rem;">#${item.rank}</span>
-                                </div>
-
-                                <!-- Información Completa, Clara y Amplia -->
-                                <div class="flex-grow-1 overflow-hidden">
-                                    <div class="d-flex justify-content-between align-items-center gap-2 mb-1 flex-wrap">
-                                        <h5 class="fw-bold text-white mb-0 text-truncate" style="font-size: 1.12rem; letter-spacing: 0.3px;">
-                                            ${item.artist}
-                                        </h5>
-                                        <span class="badge ${item.badgeClass} flex-shrink-0" style="font-size: 0.74rem; padding: 4px 10px; font-weight: 600;">
-                                            ${item.genreLabel}
-                                        </span>
-                                    </div>
-                                    <p class="text-light opacity-80 mb-0" style="font-size: 0.88rem; line-height: 1.35;">
-                                        <i class="fa-solid fa-music text-danger me-1"></i>${item.songs}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                const slideHtml = `
-                    <div class="carousel-item ${isActive}">
-                        <div class="row g-2 g-md-3">
-                            ${cardsHtml}
-                        </div>
-                    </div>
-                `;
-                $carouselInner.append(slideHtml);
-
-                const indicatorHtml = `
-                    <button type="button" data-bs-target="#musicCarousel" data-bs-slide-to="${i}" class="${isActive}" aria-label="Página ${i + 1}"></button>
-                `;
-                $indicators.append(indicatorHtml);
-            }
-
-            $counter.text(`Página 1 de ${totalSlides} • ${filtered.length} canciones`);
-
-            const carouselEl = document.getElementById('musicCarousel');
-            if (carouselEl) {
-                const bsCarousel = bootstrap.Carousel.getOrCreateInstance(carouselEl, { interval: false });
-                bsCarousel.to(0);
-            }
+        // Registrar Service Worker de la PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(function(reg) { console.log('[PWA SW] Activo en scope:', reg.scope); })
+                .catch(function(err) { console.warn('[PWA SW] Error:', err); });
         }
-
-        // FUNCIÓN: HABILITAR GESTOS TÁCTILES NATIVOS (SWIPE / DESLIZAR)
-        function enableTouchSwipe(elementId) {
-            const el = document.getElementById(elementId);
-            if (!el) return;
-
-            let startX = 0;
-            let startY = 0;
-            let endX = 0;
-            let endY = 0;
-
-            el.addEventListener('touchstart', function(e) {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            }, { passive: true });
-
-            el.addEventListener('touchend', function(e) {
-                endX = e.changedTouches[0].clientX;
-                endY = e.changedTouches[0].clientY;
-                const diffX = endX - startX;
-                const diffY = endY - startY;
-
-                // Solo si el deslizamiento es más horizontal que vertical y supera el umbral de 35px
-                if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
-                    const bsCarousel = bootstrap.Carousel.getOrCreateInstance(el);
-                    if (diffX < 0) {
-                        bsCarousel.next();
-                    } else {
-                        bsCarousel.prev();
-                    }
-                }
-            }, { passive: true });
-        }
-
-        // FUNCIÓN PRINCIPAL DE TRANSICIÓN CON DESVANECIMIENTO (FadeIn / FadeOut)
-        function navigateToSection(targetId) {
-            const $current = $('.pwa-section:visible');
-            const $target = $(targetId);
-
-            if ($target.length === 0 || $current.attr('id') === $target.attr('id')) {
-                $('#mobileDrawer').slideUp(200);
-                return;
-            }
-
-            // Cerrar menú móvil automáticamente
-            $('#mobileDrawer').slideUp(200);
-
-            // Actualizar botones activos en barra PC y menú móvil
-            $('.pwa-nav-btn, .mobile-nav-btn').removeClass('active');
-            $(`.pwa-nav-btn[data-target="${targetId}"], .mobile-nav-btn[data-target="${targetId}"]`).addClass('active');
-
-            // Efecto de desvanecimiento suave (fade out del actual, fade in del nuevo con clase active)
-            $current.stop(true, true).fadeOut(180, function() {
-                $current.removeClass('active');
-                $target.stop(true, true).fadeIn(240).addClass('active').css('display', 'flex');
-            });
-        }
-
-        $(document).ready(function() {
-            // 1. Inicializar Carrusel de Música Amplio en 2 filas
-            renderMusicCarousel('todos');
-
-            // Habilitar gestos de deslizar (swipe) táctil para móviles
-            enableTouchSwipe('musicCarousel');
-            enableTouchSwipe('pwaHeroCarousel');
-
-            // Actualizar contador al navegar entre diapositivas del carrusel de música
-            $('#musicCarousel').on('slid.bs.carousel', function (e) {
-                const total = $('#musicCarouselIndicators button').length;
-                const activeGenre = $('.btn-filter-music.active').text();
-                $('#musicPageCounter').text(`Página ${e.to + 1} de ${total} • ${activeGenre}`);
-            });
-
-            // Filtros de música
-            $('.btn-filter-music').click(function() {
-                $('.btn-filter-music').removeClass('active');
-                $(this).addClass('active');
-                const genre = $(this).data('filter-music');
-                renderMusicCarousel(genre);
-            });
-
-            // Ajustar el tamaño si el usuario redimensiona la pantalla
-            let resizeTimer;
-            $(window).resize(function() {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(function() {
-                    const activeGenre = $('.btn-filter-music.active').data('filter-music') || 'todos';
-                    renderMusicCarousel(activeGenre);
-                }, 150);
-            });
-
-            // 2. Manejo del Menú Hamburguesa para Móvil
-            $('#mobileMenuBtn').click(function(e) {
-                e.stopPropagation();
-                $('#mobileDrawer').slideToggle(220);
-            });
-
-            $(document).click(function(e) {
-                if (!$(e.target).closest('#mobileDrawer, #mobileMenuBtn').length) {
-                    $('#mobileDrawer').slideUp(200);
-                }
-            });
-
-            // 3. Clic en los botones de navegación (PC y Móvil)
-            $('.pwa-nav-btn, .mobile-nav-btn').click(function() {
-                const target = $(this).data('target');
-                if (target) {
-                    navigateToSection(target);
-                }
-            });
-
-            // 4. Formulario de Contactarme con validación
-            $('#pwaContactForm').submit(function(e) {
-                e.preventDefault();
-                let valid = true;
-
-                const nombre = $('#contactNombre').val().trim();
-                const email = $('#contactEmail').val().trim();
-                const mensaje = $('#contactMensaje').val().trim();
-
-                // Validación de Nombre
-                if (nombre.length < 2) {
-                    $('#errContactNombre').removeClass('d-none');
-                    valid = false;
-                } else {
-                    $('#errContactNombre').addClass('d-none');
-                }
-
-                // Validación de Correo
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    $('#errContactEmail').removeClass('d-none');
-                    valid = false;
-                } else {
-                    $('#errContactEmail').addClass('d-none');
-                }
-
-                // Validación de Mensaje
-                if (mensaje.length < 10) {
-                    $('#errContactMensaje').removeClass('d-none');
-                    valid = false;
-                } else {
-                    $('#errContactMensaje').addClass('d-none');
-                }
-
-                if (valid) {
-                    $('#contactSuccessMsg').removeClass('d-none');
-                    $('#pwaContactForm')[0].reset();
-                    setTimeout(() => {
-                        $('#contactSuccessMsg').addClass('d-none');
-                    }, 5000);
-                }
-            });
-
-            // 5. Registro del Service Worker
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(function(reg) {
-                        console.log('[PWA] Service Worker activo en scope:', reg.scope);
-                    })
-                    .catch(function(err) {
-                        console.warn('[PWA] Error SW:', err);
-                    });
-            }
-
-            // 6. Manejo del botón de instalación
-            let deferredPrompt = null;
-            const $installBtn = $('#pwaInstallBtn');
-
-            window.addEventListener('beforeinstallprompt', function(e) {
-                e.preventDefault();
-                deferredPrompt = e;
-                $installBtn.removeClass('d-none');
-            });
-
-            $installBtn.click(async function() {
-                if (!deferredPrompt) return;
-                deferredPrompt.prompt();
-                const choice = await deferredPrompt.userChoice;
-                console.log('[PWA] Instalación:', choice.outcome);
-                deferredPrompt = null;
-                $installBtn.addClass('d-none');
-            });
-
-            window.addEventListener('appinstalled', function() {
-                $installBtn.addClass('d-none');
-            });
-        });
     </script>
 </body>
 </html>

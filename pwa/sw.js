@@ -1,29 +1,32 @@
-// Service Worker para Sitio Web Personal y PWA
-// Alcance: Página principal (index.html), Versión PWA (index2.html) e imágenes (img/)
-// Subcarpetas como catalogos/, cibercafe/, grupal/ quedan totalmente excluidas.
+// Service Worker para la PWA de Josue Marcelo Vasquez Zeballos
+// Ubicación: pwa/sw.js (Alcance: ./ )
+// Subcarpetas catalogos/, cibercafe/, grupal/ quedan expresamente EXCLUIDAS.
 
-const CACHE_NAME = 'web-personal-pwa-v3';
+const CACHE_NAME = 'web-personal-pwa-v4';
 
-// Recursos esenciales pre-cacheados
 const PRECACHE_ASSETS = [
   './',
   './index.html',
-  './index2.html',
-  './styles.css',
-  './script.js',
   './manifest.json',
-  './img/wall.jpg',
-  './img/thegodfather.jpeg',
-  './img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg',
-  './img/icons/icon-192.png',
-  './img/icons/icon-512.png',
-  './img/icons/icon-maskable-192.png',
-  './img/icons/icon-maskable-512.png',
-  './img/icons/apple-touch-icon.png',
-  './img/icons/favicon-32.png'
+  '../styles.css',
+  '../js/hidratacion.js',
+  '../js/modulos/menu.js',
+  '../js/modulos/tema.js',
+  '../js/modulos/juegos.js',
+  '../js/modulos/musica.js',
+  '../js/modulos/contacto.js',
+  '../js/modulos/pwa-core.js',
+  '../img/wall.jpg',
+  '../img/thegodfather.jpeg',
+  '../img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg',
+  '../img/icons/icon-192.png',
+  '../img/icons/icon-512.png',
+  '../img/icons/icon-maskable-192.png',
+  '../img/icons/icon-maskable-512.png',
+  '../img/icons/apple-touch-icon.png',
+  '../img/icons/favicon-32.png'
 ];
 
-// CDNs permitidos para soporte offline
 const ALLOWED_CDNS = [
   'code.jquery.com',
   'cdn.jsdelivr.net',
@@ -32,7 +35,6 @@ const ALLOWED_CDNS = [
   'fonts.gstatic.com'
 ];
 
-// Instalación
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -47,14 +49,13 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activación y limpieza de cachés antiguas
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((name) => {
           if (name !== CACHE_NAME) {
-            console.log(`[PWA SW] Eliminando caché antigua: ${name}`);
+            console.log(`[PWA SW] Eliminando caché previa: ${name}`);
             return caches.delete(name);
           }
         })
@@ -63,24 +64,22 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Filtro de peticiones
 function shouldHandleRequest(url) {
   if (!url.protocol.startsWith('http')) return false;
 
-  if (url.origin === self.location.origin) {
-    const scopePath = new URL(self.registration.scope).pathname;
-    let relativePath = url.pathname;
-    if (relativePath.startsWith(scopePath)) {
-      relativePath = relativePath.slice(scopePath.length);
-    }
+  const path = url.pathname.toLowerCase();
 
-    // Excluir cualquier subcarpeta distinta a img/ (catalogos, cibercafe, grupal, etc.)
-    if (relativePath.includes('/') && !relativePath.startsWith('img/')) {
-      return false;
-    }
+  // EXCLUSIÓN ESTRICTA: catalogos, cibercafe y grupal jamás se cachean
+  if (path.includes('/catalogos/') || path.includes('/cibercafe/') || path.includes('/grupal/')) {
+    return false;
+  }
+
+  // Recursos de origen local
+  if (url.origin === self.location.origin) {
     return true;
   }
 
+  // CDNs autorizados
   if (ALLOWED_CDNS.some((cdn) => url.hostname.includes(cdn))) {
     return true;
   }
@@ -88,7 +87,6 @@ function shouldHandleRequest(url) {
   return false;
 }
 
-// Fetch
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
@@ -98,7 +96,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Navegación HTML
+  // Navegación
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
@@ -112,7 +110,7 @@ self.addEventListener('fetch', (event) => {
         .catch(async () => {
           const cachedResponse = await caches.match(event.request);
           if (cachedResponse) return cachedResponse;
-          return caches.match('./index2.html') || caches.match('./index.html') || caches.match('./');
+          return caches.match('./index.html') || caches.match('./');
         })
     );
     return;
