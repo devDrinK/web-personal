@@ -740,7 +740,7 @@ body.light-mode .custom-navbar .navbar-toggler-icon {
 /* =======================================================
    7. SECCIÓN DE MÚSICA & TABLA RESPONSIVA
    ======================================================= */
-#musica {
+#musica:not(.pwa-section) {
     /* En pantallas grandes (>= 992px), se expande fluidamente a lo ancho centrado en la pantalla */
     width: 100vw;
     max-width: 100vw;

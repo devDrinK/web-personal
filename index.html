@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sitio Web Personal</title>
+
+    <!-- PWA Meta Tags (Vincula el sitio principal a la PWA de index2.html) -->
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Web Personal PWA">
+
+    <!-- Favicon e Iconos PWA -->
+    <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
+    <link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+
+    <!-- Web App Manifest (Configurado para que la app instalada abra index2.html) -->
+    <link rel="manifest" href="manifest.json">
+
+    <script>
+        // Si el usuario abre el sitio desde la app instalada (PWA standalone), redirigir directamente a index2.html
+        if (window.matchMedia('(display-mode: standalone)').matches && !window.location.pathname.endsWith('index2.html')) {
+            window.location.replace('index2.html');
+        }
+    </script>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -38,11 +59,17 @@
                     <li class="nav-item"><a class="nav-link" href="#horario">Horario</a></li>
                     <li class="nav-item"><a class="nav-link" href="#musica">Música</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link text-warning fw-semibold" href="index2.html" title="Abrir versión PWA Móvil"><i class="fa-solid fa-mobile-screen-button me-1"></i>PWA Móvil</a></li>
                 </ul>
 
                 <!-- Botón Modo Oscuro / Claro[cite: 2, 8] -->
                 <button id="themeBtn" class="btn btn-outline-warning btn-sm ms-lg-3 mt-2 mt-lg-0 rounded-pill px-3">
                     <i class="fa-solid fa-moon me-1"></i> Modo Claro
+                </button>
+
+                <!-- Botón Instalar PWA (visible cuando el navegador detecta que es instalable) -->
+                <button id="pwaInstallBtn" class="btn btn-warning btn-sm ms-lg-2 mt-2 mt-lg-0 rounded-pill px-3 d-none fw-bold" title="Instalar como aplicación">
+                    <i class="fa-solid fa-download me-1"></i> Instalar PWA
                 </button>
             </div>
         </div>

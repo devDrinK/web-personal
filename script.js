@@ -434,4 +434,49 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         return text.replace(/[&<>"']/g, function(m) { return map[m]; });
     }
+
+    // =======================================================
+    // SOPORTE PWA: BOTÓN DE INSTALACIÓN
+    // =======================================================
+    const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (pwaInstallBtn) {
+            pwaInstallBtn.classList.remove('d-none');
+        }
+    });
+
+    if (pwaInstallBtn) {
+        pwaInstallBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const choice = await deferredPrompt.userChoice;
+            console.log('[PWA] Respuesta del usuario:', choice.outcome);
+            deferredPrompt = null;
+            pwaInstallBtn.classList.add('d-none');
+        });
+    }
+
+    window.addEventListener('appinstalled', () => {
+        console.log('[PWA] Aplicación PWA (index2) instalada exitosamente');
+        if (pwaInstallBtn) {
+            pwaInstallBtn.classList.add('d-none');
+        }
+    });
 });
+
+// Registro global del Service Worker para habilitar la detección de la PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then((registration) => {
+                console.log('[PWA] Service Worker registrado para el sitio con scope:', registration.scope);
+            })
+            .catch((error) => {
+                console.warn('[PWA] Error al registrar Service Worker:', error);
+            });
+    });
+}

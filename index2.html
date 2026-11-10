@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <!-- Meta viewport indispensable para PWA y adaptabilidad en móviles y tablets -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Josue Marcelo Vasquez Zeballos - Portafolio Personal (PWA)</title>
+    <!-- Meta viewport indispensable para PWA sin scroll y adaptabilidad precisa -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Josue Marcelo Vasquez Zeballos - Portafolio PWA</title>
 
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#0f172a">
@@ -24,9 +23,7 @@
     <!-- CDNs Estilos: Bootstrap 5, FontAwesome y Google Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&family=Inter:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Hoja de estilos del proyecto -->
     <link rel="stylesheet" href="styles.css">
@@ -36,510 +33,924 @@
 
     <style>
         /* ==========================================================================
-           ESTILOS BASE DEL CONTENEDOR PWA (Optimizado para Celulares y Tablets)
+           1. RESETEO TOTAL: EXPERIENCIA APP SIN SCROLL (100dvh)
            ========================================================================== */
-        body {
-            background-color: #0b1120;
-            color: #f8f9fa;
-            line-height: 1.6;
-            padding: 10px;
-        }
-
-        .pwa-notice {
-            text-align: center;
-            font-size: 13px;
-            color: #94a3b8;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        /* Contenedor principal estilo App Móvil / Tablet */
-        .pwa-container {
-            max-width: 820px;
-            margin: 0 auto 30px auto;
-            background: rgba(15, 23, 42, 0.95);
-            border-radius: 16px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            border-top: 4px solid #f97316;
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        header.pwa-header {
-            background: #0f172a;
-            color: #fff;
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #f97316;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-brand h2 {
-            font-size: 1.15rem;
-            font-weight: 700;
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
             margin: 0;
-            color: #ffffff;
+            padding: 0;
+            overflow: hidden !important; /* Cero scroll en la ventana global */
+            background-color: #070a13;
+            font-family: 'Inter', sans-serif;
+            color: #f8f9fa;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Raíz con fondo atmosférico: combinación de wall.jpg con degradados neón */
+        .pwa-app-root {
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            background-image: 
+                radial-gradient(ellipse at 50% 15%, rgba(249, 115, 22, 0.18) 0%, transparent 65%),
+                radial-gradient(circle at 90% 85%, rgba(139, 92, 246, 0.22) 0%, transparent 55%),
+                radial-gradient(circle at 10% 85%, rgba(6, 182, 212, 0.16) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(15, 23, 42, 0.88) 0%, rgba(7, 10, 18, 0.94) 100%),
+                url('img/wall.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* ==========================================================================
+           2. HEADER SUPERIOR CON BORDE ANIMADO
+           ========================================================================== */
+        .pwa-topbar {
+            height: 60px;
+            min-height: 60px;
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(90deg, #f97316, #ec4899, #8b5cf6, #06b6d4, #f97316) 1;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 1100;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
             letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: transform 0.2s ease;
         }
 
-        .header-brand small {
-            font-size: 0.8rem;
+        .brand-logo:hover {
+            transform: scale(1.02);
+            color: #fff;
+        }
+
+        .brand-logo span.name {
+            font-family: 'Montserrat', sans-serif;
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Menú Horizontal para PC (Desktop) */
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pwa-nav-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: #cbd5e1;
-            display: block;
-        }
-
-        /* Botón de Menú Hamburguesa */
-        .menu-toggle {
-            background: none;
-            border: none;
-            color: #f97316;
-            font-size: 26px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 20px;
             cursor: pointer;
-            padding: 4px 8px;
-            line-height: 1;
-            border-radius: 6px;
-            transition: background 0.2s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .menu-toggle:hover {
-            background: rgba(249, 115, 22, 0.15);
+        .pwa-nav-btn:hover {
+            color: #fff;
+            background: rgba(249, 115, 22, 0.2);
+            border-color: rgba(249, 115, 22, 0.5);
+            transform: translateY(-1px);
         }
 
-        /* Menú desplegable animado con jQuery */
-        .nav-menu {
+        .pwa-nav-btn.active {
+            color: #0f172a;
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+            border-color: #f97316;
+            font-weight: 700;
+            box-shadow: 0 0 16px rgba(249, 115, 22, 0.5);
+            transform: translateY(-1px);
+        }
+
+        /* Botón de Menú Hamburguesa para Móvil */
+        .mobile-hamburger-btn {
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid rgba(249, 115, 22, 0.5);
+            color: #f97316;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-hamburger-btn:hover, .mobile-hamburger-btn:active {
+            background: #f97316;
+            color: #0f172a;
+            transform: scale(0.95);
+        }
+
+        /* ==========================================================================
+           3. MENÚ DESPLEGABLE MÓVIL (OVERLAY / DRAWER)
+           ========================================================================== */
+        .mobile-menu-drawer {
             display: none;
-            background: #1e293b;
-            padding: 12px 20px;
-            border-bottom: 1px solid #334155;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-bottom: 2px solid #f97316;
+            padding: 12px 16px 18px 16px;
+            z-index: 1090;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
         }
 
-        .nav-menu ul {
+        .mobile-menu-drawer .mobile-nav-list {
             list-style: none;
             padding: 0;
             margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        .nav-menu ul li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .nav-menu ul li:last-child {
-            border-bottom: none;
-        }
-
-        .nav-menu ul li a {
+        .mobile-menu-drawer .mobile-nav-btn {
+            width: 100%;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: #cbd5e1;
-            text-decoration: none;
-            font-size: 14px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            transition: color 0.2s;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .nav-menu ul li a:hover {
+        .mobile-menu-drawer .mobile-nav-btn:hover,
+        .mobile-menu-drawer .mobile-nav-btn.active {
+            background: linear-gradient(90deg, rgba(249, 115, 22, 0.25) 0%, rgba(139, 92, 246, 0.15) 100%);
             color: #f97316;
+            border-color: #f97316;
+            transform: translateX(4px);
         }
 
-        .pwa-content {
-            padding: 20px 16px;
+        /* ==========================================================================
+           4. ESCENARIO CENTRAL Y ANIMACIONES DE TRANSICIÓN
+           ========================================================================== */
+        .pwa-stage {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            height: calc(100dvh - 90px);
         }
 
-        @media (max-width: 576px) {
-            body {
-                padding: 4px;
-            }
+        /* Animación suave de entrada por sección */
+        .pwa-section {
+            display: none;
+            width: 100%;
+            height: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+        }
 
-            .pwa-content {
-                padding: 14px 10px;
-            }
+        /* Anulación de alta especificidad para la sección #musica (elimina el left: 50% heredado de styles.css) */
+        section#musica,
+        #musica.pwa-section {
+            width: 100% !important;
+            max-width: 1100px !important;
+            position: relative !important;
+            left: 0 !important;
+            right: 0 !important;
+            top: 0 !important;
+            transform: none !important;
+            margin: 0 auto !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
 
-            .header-brand h2 {
-                font-size: 1rem;
+        .pwa-section.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: sectionSlideFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes sectionSlideFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(14px) scale(0.985);
             }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .pwa-card-container {
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 6px 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .pwa-card-container::-webkit-scrollbar {
+            width: 5px;
+        }
+        .pwa-card-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .pwa-card-container::-webkit-scrollbar-thumb {
+            background: rgba(249, 115, 22, 0.4);
+            border-radius: 4px;
+        }
+
+        /* ==========================================================================
+           5. PRESENTACIÓN EN EL INICIO (HERO SCREEN CON EFECTOS)
+           ========================================================================== */
+        .hero-presentation {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.75) 0%, rgba(15, 23, 42, 0.88) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .avatar-glow {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f97316;
+            animation: avatarGlowPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes avatarGlowPulse {
+            0%, 100% {
+                box-shadow: 0 0 18px rgba(249, 115, 22, 0.5), 0 0 35px rgba(139, 92, 246, 0.25);
+                border-color: #f97316;
+            }
+            50% {
+                box-shadow: 0 0 28px rgba(249, 115, 22, 0.8), 0 0 50px rgba(236, 72, 153, 0.4);
+                border-color: #fb923c;
+            }
+        }
+
+        .online-dot {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 18px;
+            height: 18px;
+            background: #10b981;
+            border: 3px solid #0f172a;
+            border-radius: 50%;
+            animation: pulseOnline 2s infinite;
+        }
+
+        @keyframes pulseOnline {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.8); }
+            50% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+        }
+
+        .quick-nav-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .quick-nav-pill:hover {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.25) 0%, rgba(139, 92, 246, 0.2) 100%);
+            border-color: #f97316;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(249, 115, 22, 0.3);
+        }
+
+        .carousel-pwa-img {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.6s ease;
+        }
+
+        #pwaHeroCarousel:hover .carousel-pwa-img {
+            transform: scale(1.02);
+        }
+
+        /* ==========================================================================
+           6. TARJETAS AMPLIAS Y ANIMADAS DE MÚSICA (EN 2 FILAS CON SWIPE TÁCTIL)
+           ========================================================================== */
+        .music-card-item {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 41, 59, 0.85) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 4px solid #f97316;
+            border-radius: 14px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 96px;
+        }
+
+        .music-card-item:hover {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.95) 100%);
+            transform: translateY(-3px);
+            border-color: rgba(249, 115, 22, 0.6);
+            box-shadow: 0 10px 28px rgba(249, 115, 22, 0.2);
+        }
+
+        .music-disc-icon {
+            font-size: 2.2rem;
+            color: #f97316;
+            filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.5));
+            transition: transform 0.4s ease;
+        }
+
+        .music-card-item:hover .music-disc-icon {
+            animation: spinDiscSmooth 3s linear infinite;
+        }
+
+        @keyframes spinDiscSmooth {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .music-carousel-nav-btn {
+            background: rgba(249, 115, 22, 0.15);
+            border: 1px solid rgba(249, 115, 22, 0.4);
+            color: #f97316;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .music-carousel-nav-btn:hover {
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+            color: #0f172a;
+            transform: scale(1.08);
+            box-shadow: 0 0 18px rgba(249, 115, 22, 0.5);
+        }
+
+        /* Micro-interacción interactiva en tarjetas de juegos e intereses */
+        .interactive-hover-card {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .interactive-hover-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(6, 182, 212, 0.5) !important;
+            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.2);
+        }
+
+        .interactive-list-item {
+            transition: all 0.2s ease;
+        }
+        .interactive-list-item:hover {
+            transform: translateX(6px);
+            border-color: rgba(249, 115, 22, 0.6) !important;
+            background: rgba(30, 41, 59, 0.85) !important;
+        }
+
+        /* Formulario y Botón Enviar con resplandor neón */
+        .btn-submit-glow {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            border: none;
+            color: #fff;
+            transition: all 0.25s ease;
+        }
+        .btn-submit-glow:hover {
+            background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+            box-shadow: 0 6px 22px rgba(249, 115, 22, 0.5);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #f97316 !important;
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.35) !important;
+            background: rgba(15, 23, 42, 0.95) !important;
+        }
+
+        /* Frase Célebre Flotante */
+        @keyframes floatQuoteBadge {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .quote-badge-animated {
+            animation: floatQuoteBadge 4s ease-in-out infinite;
+            box-shadow: 0 0 25px rgba(249, 115, 22, 0.5);
+        }
+
+        /* ==========================================================================
+           7. FOOTER COMPACTO (BARRA DE ESTADO INFERIOR)
+           ========================================================================== */
+        .pwa-bottombar {
+            height: 30px;
+            min-height: 30px;
+            background: rgba(7, 10, 18, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            font-size: 0.72rem;
+            color: #64748b;
+            z-index: 1000;
+        }
+
+        @media (max-width: 991px) {
+            .desktop-nav { display: none !important; }
+            .mobile-hamburger-btn { display: flex !important; }
+            .carousel-pwa-img { height: 150px; }
+            .hero-presentation { padding: 16px; }
+            .avatar-glow { width: 75px; height: 75px; }
+            .brand-logo span.name { max-width: 160px; }
+        }
+
+        @media (max-width: 767px) {
+            .music-disc-icon { font-size: 1.8rem; }
+            .music-card-item {
+                min-height: 90px;
+                padding: 12px 14px !important;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .mobile-hamburger-btn { display: none !important; }
+            .mobile-menu-drawer { display: none !important; }
         }
     </style>
 </head>
-
 <body>
 
-    <div class="pwa-notice">📱 Vista PWA (Optimizado para Celular y Tablet)</div>
+    <div class="pwa-app-root">
 
-    <div class="pwa-container">
-        <!-- CABECERA Y MENÚ HAMBURGUESA -->
-        <header class="pwa-header">
-            <div class="header-brand">
-                <h2><i class="fa-solid fa-terminal text-warning me-2"></i>JOSUE MARCELO VASQUEZ Z.</h2>
-                <small>Portafolio y Presentación Personal (PWA)</small>
-            </div>
+        <!-- 1. BARRA DE NAVEGACIÓN SUPERIOR CON BORDE ANIMADO (Móvil: Hamburguesa | PC: Menú Normal) -->
+        <header class="pwa-topbar">
+            <!-- Logo / Identidad Personal -->
+            <a href="javascript:void(0)" onclick="navigateToSection('#inicio')" class="brand-logo" title="Ir a Inicio">
+                <i class="fa-solid fa-terminal text-warning"></i>
+                <span class="name">JOSUE MARCELO VASQUEZ Z.</span>
+                <span class="badge bg-warning text-dark px-2 py-0 ms-1 fw-bold" style="font-size: 0.65rem;">PWA</span>
+            </a>
+
+            <!-- MENÚ NORMAL PARA PC (Visible en pantallas >= 992px) -->
+            <nav class="desktop-nav">
+                <button class="pwa-nav-btn active" data-target="#inicio">
+                    <i class="fa-solid fa-house"></i> Inicio
+                </button>
+                <button class="pwa-nav-btn" data-target="#intereses">
+                    <i class="fa-solid fa-gamepad"></i> Intereses
+                </button>
+                <button class="pwa-nav-btn" data-target="#juegos">
+                    <i class="fa-solid fa-headset"></i> Juegos
+                </button>
+                <button class="pwa-nav-btn" data-target="#horario">
+                    <i class="fa-solid fa-calendar-days"></i> Horario
+                </button>
+                <button class="pwa-nav-btn" data-target="#musica">
+                    <i class="fa-solid fa-record-vinyl"></i> Música
+                </button>
+                <button class="pwa-nav-btn" data-target="#frase">
+                    <i class="fa-solid fa-quote-left"></i> Frase
+                </button>
+                <button class="pwa-nav-btn" data-target="#contacto">
+                    <i class="fa-solid fa-envelope"></i> Contacto
+                </button>
+            </nav>
+
+            <!-- Acciones Derecha -->
             <div class="d-flex align-items-center gap-2">
-                <!-- Botón Instalar PWA (visible si el navegador permite la instalación) -->
-                <button id="pwaInstallBtn" class="btn btn-warning btn-sm rounded-pill px-3 d-none fw-bold"
-                    style="font-size: 0.75rem;">
+                <!-- Botón Instalar PWA si el navegador lo permite -->
+                <button id="pwaInstallBtn" class="btn btn-warning btn-sm rounded-pill px-3 d-none fw-bold shadow-sm" style="font-size: 0.75rem;">
                     <i class="fa-solid fa-download me-1"></i> Instalar
                 </button>
-                <button class="menu-toggle" id="hamburgerBtn" aria-label="Abrir menú de navegación">☰</button>
+
+                <!-- Enlace al sitio completo con scroll -->
+                <a href="index.html" class="btn btn-outline-secondary btn-sm rounded-pill px-2 py-1 text-light" style="font-size: 0.72rem;" title="Ver versión con formulario de comentarios y scroll">
+                    <i class="fa-solid fa-desktop me-1"></i> Web Completa
+                </a>
+
+                <!-- BOTÓN HAMBURGUESA PARA MÓVIL (Visible solo en pantallas < 992px) -->
+                <button class="mobile-hamburger-btn" id="mobileMenuBtn" aria-label="Abrir menú de secciones">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
         </header>
 
-        <!-- Menú desplegable animado con jQuery -->
-        <nav class="nav-menu" id="navMenu">
-            <ul>
-                <li><a href="#inicio"><i class="fa-solid fa-images me-2 text-warning"></i> Inicio y Fotos</a></li>
-                <li><a href="#intereses"><i class="fa-solid fa-gamepad me-2 text-info"></i> Pasatiempos e Intereses</a>
+        <!-- 2. MENÚ DESPLEGABLE MÓVIL (Animado con Slide / Fade de jQuery) -->
+        <nav class="mobile-menu-drawer" id="mobileDrawer">
+            <ul class="mobile-nav-list">
+                <li>
+                    <button class="mobile-nav-btn active" data-target="#inicio">
+                        <i class="fa-solid fa-house text-warning me-2"></i> Inicio (Presentación)
+                    </button>
                 </li>
-                <li><a href="#juegos"><i class="fa-solid fa-headset me-2 text-warning"></i> Catálogo de Juegos</a></li>
-                <li><a href="#horario"><i class="fa-solid fa-calendar-days me-2 text-success"></i> Horario
-                        Universitario</a></li>
-                <li><a href="#musica"><i class="fa-solid fa-record-vinyl me-2 text-danger"></i> Música Favorita</a></li>
-                <li><a href="#frase"><i class="fa-solid fa-quote-left me-2 text-warning"></i> Frase Célebre</a></li>
+                <li>
+                    <button class="mobile-nav-btn" data-target="#intereses">
+                        <i class="fa-solid fa-gamepad text-info me-2"></i> Pasatiempos e Intereses
+                    </button>
+                </li>
+                <li>
+                    <button class="mobile-nav-btn" data-target="#juegos">
+                        <i class="fa-solid fa-headset text-warning me-2"></i> Catálogo de Juegos
+                    </button>
+                </li>
+                <li>
+                    <button class="mobile-nav-btn" data-target="#horario">
+                        <i class="fa-solid fa-calendar-days text-success me-2"></i> Horario Universitario
+                    </button>
+                </li>
+                <li>
+                    <button class="mobile-nav-btn" data-target="#musica">
+                        <i class="fa-solid fa-record-vinyl text-danger me-2"></i> Música Favorita (Deslizable)
+                    </button>
+                </li>
+                <li>
+                    <button class="mobile-nav-btn" data-target="#frase">
+                        <i class="fa-solid fa-quote-left text-warning me-2"></i> Frase Célebre
+                    </button>
+                </li>
+                <li>
+                    <button class="mobile-nav-btn" data-target="#contacto">
+                        <i class="fa-solid fa-envelope text-warning me-2"></i> Contactarme
+                    </button>
+                </li>
+                <li class="pt-2 border-top border-secondary border-opacity-25 mt-1">
+                    <a href="index.html" class="mobile-nav-btn text-warning fw-bold text-decoration-none">
+                        <i class="fa-solid fa-desktop me-2"></i> Ir a Web Completa (con scroll)
+                    </a>
+                </li>
             </ul>
         </nav>
 
-        <div class="pwa-content">
+        <!-- 3. ESCENARIO CENTRAL (CON TRANSICIÓN DE DESVANECIMIENTO ENTRE SECCIONES) -->
+        <main class="pwa-stage">
 
-            <!-- 1. Carrusel de Fotos -->
-            <section id="inicio" class="mb-5">
-                <div id="mainCarousel" class="carousel slide shadow-lg glass-card p-2" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"
-                            aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop"
-                                class="d-block w-100" alt="Ingeniería de Sistemas - UPDS">
-                            <div class="carousel-caption">
-                                <h5 class="fw-bold text-warning"><i
-                                        class="fa-solid fa-graduation-cap me-2"></i>Ingeniería de Sistemas</h5>
-                                <p class="mb-0 d-none d-sm-block">Estudiante de 6to semestre en la Universidad Privada
-                                    Domingo Savio (UPDS).</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg" class="d-block w-100"
-                                alt="El Señor de los Anillos">
-                            <div class="carousel-caption">
-                                <h5 class="fw-bold text-info"><i class="fa-solid fa-ring me-2"></i>El Señor de los
-                                    Anillos</h5>
-                                <p class="mb-0 d-none d-sm-block">Cine de culto y fantasía épica: una obra maestra sobre
-                                    valor, lealtad y aventura.</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="img/thegodfather.jpeg" class="d-block w-100" alt="El Padrino">
-                            <div class="carousel-caption">
-                                <h5 class="fw-bold text-danger"><i class="fa-solid fa-film me-2"></i>El Padrino (The
-                                    Godfather)</h5>
-                                <p class="mb-0 d-none d-sm-block">Pasión por el cine clásico: el arte inigualable del
-                                    drama, la estrategia y la familia.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
-                </div>
-            </section>
-
-            <!-- 2. Pasatiempos e Intereses -->
-            <section id="intereses" class="mb-5">
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="glass-card p-4 h-100">
-                            <h3 class="section-title text-warning">
-                                <i class="fa-solid fa-gamepad me-2"></i>Pasatiempos
-                            </h3>
-                            <p class="text-secondary small mb-4">(Ocio y desconexión)</p>
-                            <ol class="custom-list list-pasatiempos">
-                                <li>Ver videos divulgativos</li>
-                                <li>Buscar curiosidades por redes sociales</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="glass-card p-4 h-100">
-                            <h3 class="section-title text-info">
-                                <i class="fa-solid fa-lightbulb me-2"></i>Intereses
-                            </h3>
-                            <p class="text-secondary small mb-4">(Desarrollo y crecimiento)</p>
-                            <ol class="custom-list list-intereses">
-                                <li>Caminar</li>
-                                <li>Escribir</li>
-                                <li>Pruebas de IA para proyectos pequeños</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 3. Catálogo de Juegos Favoritos con Filtros -->
-            <section id="juegos" class="mb-5">
-                <div class="glass-card p-4">
-                    <h3 class="section-title text-info">
-                        <i class="fa-solid fa-headset me-2"></i>Catálogo de Juegos Favoritos
-                    </h3>
-                    <p class="opacity-75 mb-3">Filtra mi colección por género o haz clic en cualquier juego para ver su
-                        tráiler oficial:</p>
-
-                    <!-- Botones de filtro de juegos -->
-                    <div class="mb-4 d-flex gap-2 flex-wrap">
-                        <button class="btn btn-outline-light btn-filter active" data-filter="todos">Ver Todos</button>
-                        <button class="btn btn-outline-info btn-filter" data-filter="shooter">Shooters</button>
-                        <button class="btn btn-outline-warning btn-filter" data-filter="rpg">RPG</button>
-                        <button class="btn btn-outline-danger btn-filter" data-filter="accion">Acción /
-                            Aventura</button>
-                        <button class="btn btn-outline-success btn-filter" data-filter="terror">Terror</button>
-                    </div>
-
-                    <div class="row g-3" id="catalogoJuegos">
-                        <!-- The Witcher 3 -->
-                        <div class="col-12 col-sm-6 card-juego" data-categoria="rpg">
-                            <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
-                                data-bs-toggle="modal" data-bs-target="#modalTrailer"
-                                data-titulo="The Witcher 3: Wild Hunt"
-                                data-video="https://www.youtube.com/embed/c0i8kPYtiiI" role="button">
-                                <h5 class="fw-bold text-warning"><i class="fa-solid fa-dragon me-2"></i>The Witcher 3
-                                </h5>
-                                <span class="badge bg-warning text-dark">RPG</span>
-                                <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler
-                                </p>
-                            </div>
-                        </div>
-                        <!-- God of War -->
-                        <div class="col-12 col-sm-6 card-juego" data-categoria="accion">
-                            <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
-                                data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="God of War (2018)"
-                                data-video="https://www.youtube.com/embed/K0u_kAWLJOA" role="button">
-                                <h5 class="fw-bold text-danger"><i class="fa-solid fa-axe-battle me-2"></i>God of War
-                                </h5>
-                                <span class="badge bg-danger text-white">Acción / Aventura</span>
-                                <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Red Dead Redemption 2 -->
-                        <div class="col-12 col-sm-6 card-juego" data-categoria="accion">
-                            <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
-                                data-bs-toggle="modal" data-bs-target="#modalTrailer"
-                                data-titulo="Red Dead Redemption 2"
-                                data-video="https://www.youtube.com/embed/gmA6MrX81z4" role="button">
-                                <h5 class="fw-bold text-danger"><i class="fa-solid fa-horse me-2"></i>Red Dead
-                                    Redemption 2</h5>
-                                <span class="badge bg-danger text-white">Acción / Mundo Abierto</span>
-                                <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Resident Evil -->
-                        <div class="col-12 col-sm-6 card-juego" data-categoria="terror">
-                            <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
-                                data-bs-toggle="modal" data-bs-target="#modalTrailer"
-                                data-titulo="Resident Evil 4 Remake"
-                                data-video="https://www.youtube.com/embed/E69q0gzt-sQ" role="button">
-                                <h5 class="fw-bold text-success"><i class="fa-solid fa-ghost me-2"></i>Resident Evil
-                                </h5>
-                                <span class="badge bg-success text-white">Terror / Survival</span>
-                                <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Final Fantasy -->
-                        <div class="col-12 col-sm-6 card-juego" data-categoria="rpg">
-                            <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
-                                data-bs-toggle="modal" data-bs-target="#modalTrailer"
-                                data-titulo="Final Fantasy VII Rebirth"
-                                data-video="https://www.youtube.com/embed/H3s0uRLiIdM" role="button">
-                                <h5 class="fw-bold text-warning"><i
-                                        class="fa-solid fa-wand-magic-sparkles me-2"></i>Final Fantasy</h5>
-                                <span class="badge bg-warning text-dark">RPG</span>
-                                <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler
-                                </p>
-                            </div>
-                        </div>
-                        <!-- The Legend of Zelda -->
-                        <div class="col-12 col-sm-6 card-juego" data-categoria="accion">
-                            <div class="p-3 border border-secondary rounded-3 bg-dark bg-opacity-50 h-100 cursor-pointer"
-                                data-bs-toggle="modal" data-bs-target="#modalTrailer"
-                                data-titulo="The Legend of Zelda: Tears of the Kingdom"
-                                data-video="https://www.youtube.com/embed/uHGShqcAHlQ" role="button">
-                                <h5 class="fw-bold text-danger"><i class="fa-solid fa-shield-halved me-2"></i>The Legend
-                                    of Zelda</h5>
-                                <span class="badge bg-danger text-white">Acción / Aventura</span>
-                                <p class="small text-muted mt-2 mb-0"><i class="fa-solid fa-play me-1"></i> Ver Tráiler
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- MODAL DE BOOTSTRAP PARA EL TRÁILER -->
-            <div class="modal fade" id="modalTrailer" tabindex="-1" aria-labelledby="modalTrailerLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content bg-dark text-light border border-secondary">
-                        <div class="modal-header border-secondary">
-                            <h5 class="modal-title fw-bold text-warning" id="modalTrailerLabel">Tráiler Oficial</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body p-0">
-                            <div class="ratio ratio-16x9">
-                                <iframe id="iframeTrailer" src="" title="YouTube video player" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. Horario Google Sheets -->
-            <section id="horario" class="mb-5">
-                <div class="glass-card p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
-                        <h3 class="section-title text-success mb-0">
-                            <i class="fa-solid fa-calendar-days me-2"></i>Horario
-                        </h3>
-                        <span
-                            class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
-                            <i class="fa-solid fa-rotate me-1"></i> Planificación diaria
-                        </span>
-                    </div>
-                    <p class="opacity-75 mb-3">
-                        Visualización directa de mi planificación semanal estructurada desde Google Sheets:
-                    </p>
-                    <div class="iframe-container ratio ratio-16x9 shadow">
-                        <iframe
-                            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQqo3n9niQ3ruAV3ipWY1MIvF5FVlKhurZkKgvsqHWiWXU6UDqKtjmxuwQ0yyIhNTYpRATuR9ZZPdDB/pubhtml?gid=0&single=true"></iframe>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 5. Música Favorita con Filtro -->
-            <section id="musica" class="mb-5">
-                <div class="glass-card p-4">
-                    <h3 class="section-title text-danger">
-                        <i class="fa-solid fa-record-vinyl me-2"></i>Música Favorita
-                    </h3>
-                    <p class="opacity-75 mb-3">Filtra mis géneros, bandas y artistas favoritos por categoría en tiempo
-                        real:</p>
-
-                    <!-- Botones de filtrado para música -->
-                    <div class="mb-4 d-flex gap-2 flex-wrap">
-                        <button class="btn btn-outline-light btn-filter-music active" data-filter-music="todos">Ver
-                            Todos</button>
-                        <button class="btn btn-outline-warning btn-filter-music" data-filter-music="rock">Rock /
-                            Alternativo</button>
-                        <button class="btn btn-outline-danger btn-filter-music" data-filter-music="metal">Metal /
-                            Post-Hardcore</button>
-                        <button class="btn btn-outline-info btn-filter-music" data-filter-music="pop">Pop /
-                            Electropop</button>
-                        <button class="btn btn-outline-success btn-filter-music" data-filter-music="urbano">Urbano /
-                            Reggaetón</button>
-                        <button class="btn btn-outline-primary btn-filter-music" data-filter-music="indie">Indie / Folk
-                            / Rock en Español</button>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table custom-table mb-0">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="th-num">#</th>
-                                    <th scope="col" class="th-artist">Artista / Grupo</th>
-                                    <th scope="col" class="th-genre">Género</th>
-                                    <th scope="col" class="th-desc">Canciones / Descripción</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tablaMusica">
-                                <tr class="music-row music-item" data-genero="rock">
-                                    <td><span class="music-rank-badge music-rank-1">1</span></td>
-                                    <td class="fw-bold text-warning">Linkin Park</td>
-                                    <td><span class="badge bg-warning text-dark">Rock / Nu Metal</span></td>
-                                    <td class="music-desc">In the End, Numb, Castle of Glass</td>
-                                </tr>
-                                <tr class="music-row music-item" data-genero="rock">
-                                    <td><span class="music-rank-badge music-rank-2">2</span></td>
-                                    <td class="fw-bold text-warning">Green Day</td>
-                                    <td><span class="badge bg-warning text-dark">Punk Rock</span></td>
-                                    <td class="music-desc">Boulevard of Broken Dreams, American Idiot</td>
-                                </tr>
-                                <tr class="music-row music-item" data-genero="metal">
-                                    <td><span class="music-rank-badge music-rank-3">3</span></td>
-                                    <td class="fw-bold text-danger">Bring Me The Horizon</td>
-                                    <td><span class="badge bg-danger text-white">Post-Hardcore / Alt Metal</span></td>
-                                    <td class="music-desc">Can You Feel My Heart, Throne, Drown</td>
-                                </tr>
-                                <tr class="music-row music-item" data-genero="pop">
-                                    <td><span class="music-rank-badge">4</span></td>
-                                    <td class="fw-bold text-info">The Weeknd</td>
-                                    <td><span class="badge bg-info text-dark">R&B / Synthpop</span></td>
-                                    <td class="music-desc">Blinding Lights, Save Your Tears, Starboy</td>
-                                </tr>
-                                <tr class="music-row music-item" data-genero="urbano">
-                                    <td><span class="music-rank-badge">5</span></td>
-                                    <td class="fw-bold text-success">Bad Bunny</td>
-                                    <td><span class="badge bg-success text-white">Urbano / Reggaetón</span></td>
-                                    <td class="music-desc">Ojitos Lindos, Tití Me Preguntó, Moscow Mule</td>
-                                </tr>
-                                <tr class="music-row music-item" data-genero="indie">
-                                    <td><span class="music-rank-badge">6</span></td>
-                                    <td class="fw-bold text-primary">Cuarteto de Nos</td>
-                                    <td><span class="badge bg-primary text-white">Rock Alternativo / Indie</span></td>
-                                    <td class="music-desc">Yendo a la Casa de Damián, Lo Malo de Ser Bueno</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 6. Frase Célebre -->
-            <section id="frase" class="mb-4">
-                <h3 class="section-title text-warning">
-                    <i class="fa-solid fa-quote-left me-2"></i>Frase Célebre
-                </h3>
-                <div class="glass-card quote-card p-4 position-relative overflow-hidden">
-                    <i class="fa-solid fa-quote-right quote-watermark"></i>
-                    <div class="row align-items-center g-3 position-relative" style="z-index: 1;">
-                        <div class="col-auto d-none d-sm-flex">
-                            <div class="quote-badge">
-                                <i class="fa-solid fa-quote-left"></i>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <blockquote class="blockquote mb-0">
-                                <p class="quote-text fs-5 fw-semibold mb-3">
-                                    "El éxito no es definitivo, el fracaso no es fatal: <span class="quote-highlight">lo
-                                        que cuenta es el valor para continuar</span>."
-                                </p>
-                                <div
-                                    class="d-flex align-items-center gap-3 pt-3 border-top border-light border-opacity-10">
-                                    <div class="author-avatar">
-                                        <i class="fa-solid fa-landmark"></i>
+            <!-- SECCIÓN 1: PRESENTACIÓN INICIAL (HERO) -->
+            <section id="inicio" class="pwa-section active">
+                <div class="pwa-card-container">
+                    <div class="hero-presentation">
+                        <div class="row align-items-center g-3">
+                            <!-- Columna Presentación -->
+                            <div class="col-12 col-lg-7">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <div class="avatar-wrapper flex-shrink-0">
+                                        <img src="img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg" alt="Josue Marcelo" class="avatar-glow">
+                                        <span class="online-dot" title="Disponible en línea"></span>
                                     </div>
                                     <div>
-                                        <div class="fw-bold text-warning">Winston Churchill</div>
-                                        <div class="opacity-75 small">Estadista y Primer Ministro británico • Premio
-                                            Nobel</div>
+                                        <span class="badge bg-warning bg-opacity-25 text-warning border border-warning border-opacity-50 px-2 py-1 mb-1" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-sparkles me-1"></i> Portafolio PWA Oficial
+                                        </span>
+                                        <h2 class="fw-bold mb-0 text-white" style="font-size: 1.35rem;">Josue Marcelo Vasquez Z.</h2>
+                                        <p class="text-warning fw-semibold mb-0" style="font-size: 0.88rem;">
+                                            <i class="fa-solid fa-graduation-cap me-1"></i> Ingeniería de Sistemas • 6to Semestre (UPDS)
+                                        </p>
                                     </div>
+                                </div>
+
+                                <p class="text-light opacity-90 small mb-3" style="line-height: 1.55;">
+                                    ¡Hola! Bienvenido a mi Progressive Web App. Aquí encontrarás mi presentación profesional, aficiones, catálogo de videojuegos con tráilers, planificación académica, repertorio musical en carrusel táctil de dos filas y formulario directo para contactarme, todo sin scroll global y con diseño dinámico.
+                                </p>
+
+                                <!-- Accesos rápidos a las secciones con desvanecimiento -->
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="quick-nav-pill" onclick="navigateToSection('#intereses')">
+                                        <i class="fa-solid fa-gamepad text-info"></i> Intereses
+                                    </button>
+                                    <button class="quick-nav-pill" onclick="navigateToSection('#juegos')">
+                                        <i class="fa-solid fa-headset text-warning"></i> Juegos
+                                    </button>
+                                    <button class="quick-nav-pill" onclick="navigateToSection('#horario')">
+                                        <i class="fa-solid fa-calendar-days text-success"></i> Horario
+                                    </button>
+                                    <button class="quick-nav-pill" onclick="navigateToSection('#musica')">
+                                        <i class="fa-solid fa-record-vinyl text-danger"></i> Música
+                                    </button>
+                                    <button class="quick-nav-pill" onclick="navigateToSection('#frase')">
+                                        <i class="fa-solid fa-quote-left text-warning"></i> Frase
+                                    </button>
+                                    <button class="quick-nav-pill" onclick="navigateToSection('#contacto')">
+                                        <i class="fa-solid fa-envelope text-warning"></i> Contactarme
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Columna Carrusel Fotográfico -->
+                            <div class="col-12 col-lg-5">
+                                <div id="pwaHeroCarousel" class="carousel slide shadow rounded-3 overflow-hidden border border-secondary border-opacity-30" data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#pwaHeroCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                                        <button type="button" data-bs-target="#pwaHeroCarousel" data-bs-slide-to="1"></button>
+                                        <button type="button" data-bs-target="#pwaHeroCarousel" data-bs-slide-to="2"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop" class="d-block w-100 carousel-pwa-img" alt="UPDS Sistemas">
+                                            <div class="carousel-caption p-1 bg-dark bg-opacity-75 rounded-2 mb-2">
+                                                <small class="fw-bold text-warning d-block">Ingeniería de Sistemas</small>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="img/WhatsApp Image 2026-11-02 at 9.32.48 PM.jpeg" class="d-block w-100 carousel-pwa-img" alt="El Señor de los Anillos">
+                                            <div class="carousel-caption p-1 bg-dark bg-opacity-75 rounded-2 mb-2">
+                                                <small class="fw-bold text-info d-block">El Señor de los Anillos</small>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="img/thegodfather.jpeg" class="d-block w-100 carousel-pwa-img" alt="El Padrino">
+                                            <div class="carousel-caption p-1 bg-dark bg-opacity-75 rounded-2 mb-2">
+                                                <small class="fw-bold text-danger d-block">El Padrino (The Godfather)</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#pwaHeroCarousel" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#pwaHeroCarousel" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 2: INTERESES -->
+            <section id="intereses" class="pwa-section">
+                <div class="pwa-card-container">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h4 class="fw-bold mb-0 text-warning"><i class="fa-solid fa-gamepad me-2"></i>Pasatiempos e Intereses</h4>
+                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" onclick="navigateToSection('#inicio')">
+                            <i class="fa-solid fa-arrow-left me-1"></i> Volver
+                        </button>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="hero-presentation p-3 rounded-4 h-100 border border-secondary border-opacity-25">
+                                <h5 class="text-warning mb-2"><i class="fa-solid fa-dice me-2"></i>Pasatiempos</h5>
+                                <p class="text-secondary small mb-3">(Ocio y desconexión)</p>
+                                <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                                    <li class="p-2 bg-dark bg-opacity-60 rounded-3 border border-secondary border-opacity-25 small interactive-list-item">
+                                        <i class="fa-solid fa-video text-warning me-2"></i>Ver videos divulgativos de ciencia y programación
+                                    </li>
+                                    <li class="p-2 bg-dark bg-opacity-60 rounded-3 border border-secondary border-opacity-25 small interactive-list-item">
+                                        <i class="fa-solid fa-hashtag text-warning me-2"></i>Buscar curiosidades por redes sociales y tecnología
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="hero-presentation p-3 rounded-4 h-100 border border-secondary border-opacity-25">
+                                <h5 class="text-info mb-2"><i class="fa-solid fa-lightbulb me-2"></i>Intereses</h5>
+                                <p class="text-secondary small mb-3">(Desarrollo y crecimiento)</p>
+                                <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                                    <li class="p-2 bg-dark bg-opacity-60 rounded-3 border border-secondary border-opacity-25 small interactive-list-item">
+                                        <i class="fa-solid fa-person-walking text-info me-2"></i>Caminar y desconectar al aire libre
+                                    </li>
+                                    <li class="p-2 bg-dark bg-opacity-60 rounded-3 border border-secondary border-opacity-25 small interactive-list-item">
+                                        <i class="fa-solid fa-pen-nib text-info me-2"></i>Escribir notas y reflexiones personales
+                                    </li>
+                                    <li class="p-2 bg-dark bg-opacity-60 rounded-3 border border-secondary border-opacity-25 small interactive-list-item">
+                                        <i class="fa-solid fa-brain text-info me-2"></i>Pruebas de Inteligencia Artificial para proyectos
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 3: JUEGOS FAVORITOS -->
+            <section id="juegos" class="pwa-section">
+                <div class="pwa-card-container">
+                    <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
+                        <h4 class="fw-bold mb-0 text-info"><i class="fa-solid fa-headset me-2"></i>Catálogo de Juegos</h4>
+                        <div class="d-flex gap-1 flex-wrap">
+                            <button class="btn btn-sm btn-outline-light btn-filter active py-0 px-2" data-filter="todos" style="font-size: 0.78rem;">Todos</button>
+                            <button class="btn btn-sm btn-outline-warning btn-filter py-0 px-2" data-filter="rpg" style="font-size: 0.78rem;">RPG</button>
+                            <button class="btn btn-sm btn-outline-danger btn-filter py-0 px-2" data-filter="accion" style="font-size: 0.78rem;">Acción</button>
+                            <button class="btn btn-sm btn-outline-success btn-filter py-0 px-2" data-filter="terror" style="font-size: 0.78rem;">Terror</button>
+                        </div>
+                    </div>
+
+                    <div class="row g-2" id="catalogoJuegos">
+                        <div class="col-12 col-sm-6 col-md-4 card-juego" data-categoria="rpg">
+                            <div class="p-2 border border-secondary rounded-3 bg-dark bg-opacity-60 cursor-pointer interactive-hover-card" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="The Witcher 3: Wild Hunt" data-video="https://www.youtube.com/embed/c0i8kPYtiiI" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold text-warning small"><i class="fa-solid fa-dragon me-1"></i>The Witcher 3</span>
+                                    <span class="badge bg-warning text-dark" style="font-size: 0.65rem;">RPG</span>
+                                </div>
+                                <p class="text-muted mb-0 mt-1" style="font-size: 0.72rem;"><i class="fa-solid fa-play me-1 text-danger"></i>Ver Tráiler</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4 card-juego" data-categoria="accion">
+                            <div class="p-2 border border-secondary rounded-3 bg-dark bg-opacity-60 cursor-pointer interactive-hover-card" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="God of War (2018)" data-video="https://www.youtube.com/embed/K0u_kAWLJOA" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold text-danger small"><i class="fa-solid fa-shield-halved me-1"></i>God of War</span>
+                                    <span class="badge bg-danger text-white" style="font-size: 0.65rem;">Acción</span>
+                                </div>
+                                <p class="text-muted mb-0 mt-1" style="font-size: 0.72rem;"><i class="fa-solid fa-play me-1 text-danger"></i>Ver Tráiler</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4 card-juego" data-categoria="accion">
+                            <div class="p-2 border border-secondary rounded-3 bg-dark bg-opacity-60 cursor-pointer interactive-hover-card" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Red Dead Redemption 2" data-video="https://www.youtube.com/embed/gmA6MrX81z4" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold text-danger small"><i class="fa-solid fa-horse me-1"></i>Red Dead 2</span>
+                                    <span class="badge bg-danger text-white" style="font-size: 0.65rem;">Acción</span>
+                                </div>
+                                <p class="text-muted mb-0 mt-1" style="font-size: 0.72rem;"><i class="fa-solid fa-play me-1 text-danger"></i>Ver Tráiler</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4 card-juego" data-categoria="terror">
+                            <div class="p-2 border border-secondary rounded-3 bg-dark bg-opacity-60 cursor-pointer interactive-hover-card" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Resident Evil 4 Remake" data-video="https://www.youtube.com/embed/E69q0gzt-sQ" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold text-success small"><i class="fa-solid fa-ghost me-1"></i>Resident Evil 4</span>
+                                    <span class="badge bg-success text-white" style="font-size: 0.65rem;">Terror</span>
+                                </div>
+                                <p class="text-muted mb-0 mt-1" style="font-size: 0.72rem;"><i class="fa-solid fa-play me-1 text-danger"></i>Ver Tráiler</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4 card-juego" data-categoria="rpg">
+                            <div class="p-2 border border-secondary rounded-3 bg-dark bg-opacity-60 cursor-pointer interactive-hover-card" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="Final Fantasy VII Rebirth" data-video="https://www.youtube.com/embed/H3s0uRLiIdM" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold text-warning small"><i class="fa-solid fa-wand-magic-sparkles me-1"></i>Final Fantasy VII</span>
+                                    <span class="badge bg-warning text-dark" style="font-size: 0.65rem;">RPG</span>
+                                </div>
+                                <p class="text-muted mb-0 mt-1" style="font-size: 0.72rem;"><i class="fa-solid fa-play me-1 text-danger"></i>Ver Tráiler</p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-6 col-md-4 card-juego" data-categoria="accion">
+                            <div class="p-2 border border-secondary rounded-3 bg-dark bg-opacity-60 cursor-pointer interactive-hover-card" data-bs-toggle="modal" data-bs-target="#modalTrailer" data-titulo="The Legend of Zelda: Tears of the Kingdom" data-video="https://www.youtube.com/embed/uHGShqcAHlQ" role="button">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold text-danger small"><i class="fa-solid fa-shield me-1"></i>Zelda: TotK</span>
+                                    <span class="badge bg-danger text-white" style="font-size: 0.65rem;">Acción</span>
+                                </div>
+                                <p class="text-muted mb-0 mt-1" style="font-size: 0.72rem;"><i class="fa-solid fa-play me-1 text-danger"></i>Ver Tráiler</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 4: HORARIO -->
+            <section id="horario" class="pwa-section">
+                <div class="pwa-card-container">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <h4 class="fw-bold mb-0 text-success"><i class="fa-solid fa-calendar-days me-2"></i>Horario Semanal</h4>
+                        <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50" style="font-size: 0.72rem;">Google Sheets</span>
+                    </div>
+                    <div class="ratio ratio-16x9 shadow rounded-3 overflow-hidden border border-secondary border-opacity-25" style="max-height: calc(100dvh - 160px);">
+                        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQqo3n9niQ3ruAV3ipWY1MIvF5FVlKhurZkKgvsqHWiWXU6UDqKtjmxuwQ0yyIhNTYpRATuR9ZZPdDB/pubhtml?gid=0&single=true"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 5: MÚSICA FAVORITA (CARRUSEL EN 2 FILAS CON GESTO DESLIZAR Y TARJETAS AMPLIAS) -->
+            <section id="musica" class="pwa-section">
+                <div class="pwa-card-container">
+                    <div class="hero-presentation p-3 p-md-4 rounded-4 border border-secondary border-opacity-30 mx-auto w-100" style="max-width: 980px;">
+                        <!-- Cabecera de Música y Filtros -->
+                        <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
+                            <div>
+                                <h4 class="fw-bold mb-0 text-danger d-flex align-items-center gap-2" style="font-size: 1.25rem;">
+                                    <i class="fa-solid fa-record-vinyl"></i> Repertorio Musical
+                                    <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-50 d-none d-sm-inline-block" style="font-size: 0.72rem;">2 Filas</span>
+                                </h4>
+                                <div class="d-flex align-items-center gap-2 mt-1">
+                                    <span class="text-warning fw-semibold" id="musicPageCounter" style="font-size: 0.82rem;">Cargando catálogo...</span>
+                                    <span class="d-md-none text-light opacity-75 small">
+                                        • <i class="fa-solid fa-hand-pointer text-warning me-1"></i><strong>Desliza</strong> con el dedo
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Filtros de Género con botones amplios y cómodos -->
+                            <div class="d-flex gap-1 flex-wrap">
+                                <button class="btn btn-sm btn-outline-light btn-filter-music active py-1 px-2" data-filter-music="todos" style="font-size: 0.78rem;">Todos (28)</button>
+                                <button class="btn btn-sm btn-outline-warning btn-filter-music py-1 px-2" data-filter-music="rock" style="font-size: 0.78rem;">Rock</button>
+                                <button class="btn btn-sm btn-outline-danger btn-filter-music py-1 px-2" data-filter-music="metal" style="font-size: 0.78rem;">Metal</button>
+                                <button class="btn btn-sm btn-outline-info btn-filter-music py-1 px-2" data-filter-music="pop" style="font-size: 0.78rem;">Pop</button>
+                                <button class="btn btn-sm btn-outline-success btn-filter-music py-1 px-2" data-filter-music="urbano" style="font-size: 0.78rem;">Urbano</button>
+                                <button class="btn btn-sm btn-outline-primary btn-filter-music py-1 px-2" data-filter-music="indie" style="font-size: 0.78rem;">Indie</button>
+                            </div>
+                        </div>
+
+                        <!-- Carrusel de Música con 2 Filas y Soporte Táctil Swipe -->
+                        <div id="musicCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false">
+                            <div class="carousel-inner" id="musicCarouselInner">
+                                <!-- Los elementos amplios de 2 filas se inyectan dinámicamente -->
+                            </div>
+
+                            <!-- Controles de Navegación: Flechas en PC, solo indicadores en Móvil -->
+                            <div class="d-flex justify-content-between align-items-center mt-3 px-1">
+                                <!-- Flecha Anterior (Visible solo en PC / Tablet >= 768px) -->
+                                <button class="music-carousel-nav-btn d-none d-md-flex" type="button" data-bs-target="#musicCarousel" data-bs-slide="prev" aria-label="Anterior">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+
+                                <!-- Indicadores de posición de página -->
+                                <div class="carousel-indicators position-static m-0 mx-auto" id="musicCarouselIndicators">
+                                    <!-- Indicadores generados por JS -->
+                                </div>
+
+                                <!-- Flecha Siguiente (Visible solo en PC / Tablet >= 768px) -->
+                                <button class="music-carousel-nav-btn d-none d-md-flex" type="button" data-bs-target="#musicCarousel" data-bs-slide="next" aria-label="Siguiente">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 6: FRASE CÉLEBRE -->
+            <section id="frase" class="pwa-section">
+                <div class="pwa-card-container">
+                    <div class="hero-presentation quote-card p-4 rounded-4 position-relative overflow-hidden border border-secondary border-opacity-30 text-center mx-auto" style="max-width: 680px;">
+                        <i class="fa-solid fa-quote-right quote-watermark opacity-25"></i>
+                        <div class="position-relative" style="z-index: 1;">
+                            <div class="quote-badge-animated mx-auto mb-3" style="width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); display: flex; align-items: center; justify-content: center; font-size: 1.35rem; color: #fff;">
+                                <i class="fa-solid fa-quote-left"></i>
+                            </div>
+                            <blockquote class="blockquote mb-0">
+                                <p class="quote-text fs-5 fw-semibold mb-3 text-light" style="line-height: 1.5;">
+                                    "El éxito no es definitivo, el fracaso no es fatal: <span class="quote-highlight text-warning">lo que cuenta es el valor para continuar</span>."
+                                </p>
+                                <div class="pt-3 border-top border-light border-opacity-10 d-inline-block">
+                                    <div class="fw-bold text-warning fs-5">Winston Churchill</div>
+                                    <div class="opacity-75 small">Estadista y Primer Ministro británico • Premio Nobel</div>
                                 </div>
                             </blockquote>
                         </div>
@@ -547,84 +958,416 @@
                 </div>
             </section>
 
-            <!-- Footer PWA -->
-            <footer class="py-4 text-center border-top border-secondary border-opacity-25 mt-4">
-                <div class="d-flex justify-content-center gap-3 mb-3">
-                    <a href="https://www.facebook.com" target="_blank" class="social-btn social-facebook"
-                        title="Facebook" aria-label="Facebook">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.instagram.com" target="_blank" class="social-btn social-instagram"
-                        title="Instagram" aria-label="Instagram">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a href="https://www.github.com" target="_blank" class="social-btn social-github" title="GitHub"
-                        aria-label="GitHub">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-                </div>
-                <p class="mb-1 small">&copy; 2026 Josue Marcelo Vasquez Zeballos - Progressive Web App (PWA)</p>
-                <small class="opacity-50">Diseñado con Bootstrap 5 & jQuery DOM</small>
-            </footer>
+            <!-- SECCIÓN 7: CONTACTARME (FORMULARIO ENFOCADO A CONTACTO DIRECTO) -->
+            <section id="contacto" class="pwa-section">
+                <div class="pwa-card-container">
+                    <div class="hero-presentation p-3 p-md-4 rounded-4 border border-secondary border-opacity-30 mx-auto w-100" style="max-width: 680px;">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div>
+                                <h4 class="fw-bold mb-0 text-warning"><i class="fa-solid fa-envelope me-2"></i>Contactarme</h4>
+                                <p class="text-secondary small mb-0">Envíame un mensaje directo para proyectos, consultas o colaboraciones.</p>
+                            </div>
+                            <a href="https://github.com/devDrinK" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-2" title="Ver GitHub">
+                                <i class="fa-brands fa-github me-1"></i>devDrinK
+                            </a>
+                        </div>
 
+                        <!-- Alerta de éxito -->
+                        <div id="contactSuccessMsg" class="alert alert-success py-2 px-3 small d-none mb-2 border-0 shadow">
+                            <i class="fa-solid fa-circle-check me-1"></i> ¡Gracias por tu mensaje! Me pondré en contacto contigo pronto.
+                        </div>
+
+                        <!-- Formulario Contactarme -->
+                        <form id="pwaContactForm" novalidate>
+                            <div class="row g-2 mb-2">
+                                <div class="col-md-6">
+                                    <label class="form-label small text-secondary fw-semibold mb-1">Nombre <span class="text-danger">*</span></label>
+                                    <input type="text" id="contactNombre" class="form-control form-control-sm bg-dark bg-opacity-75 text-light border-secondary" placeholder="Tu nombre completo" required autocomplete="off">
+                                    <div class="text-danger small mt-0 d-none" id="errContactNombre" style="font-size: 0.72rem;">Por favor, ingresa tu nombre.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small text-secondary fw-semibold mb-1">Correo Electrónico <span class="text-danger">*</span></label>
+                                    <input type="email" id="contactEmail" class="form-control form-control-sm bg-dark bg-opacity-75 text-light border-secondary" placeholder="correo@ejemplo.com" required autocomplete="off">
+                                    <div class="text-danger small mt-0 d-none" id="errContactEmail" style="font-size: 0.72rem;">Ingresa un correo válido.</div>
+                                </div>
+                            </div>
+
+                            <div class="row g-2 mb-2">
+                                <div class="col-md-6">
+                                    <label class="form-label small text-secondary fw-semibold mb-1">Asunto / Motivo</label>
+                                    <select id="contactAsunto" class="form-select form-select-sm bg-dark bg-opacity-75 text-light border-secondary">
+                                        <option value="Consulta General">Consulta General</option>
+                                        <option value="Propuesta de Proyecto">Propuesta de Proyecto / Trabajo</option>
+                                        <option value="Colaboración Académica">Colaboración Académica (UPDS)</option>
+                                        <option value="Felicitación o Feedback">Felicitación o Feedback</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label small text-secondary fw-semibold mb-1">Teléfono (opcional)</label>
+                                    <input type="tel" id="contactTel" class="form-control form-control-sm bg-dark bg-opacity-75 text-light border-secondary" placeholder="Ej. +591 70000000">
+                                </div>
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label small text-secondary fw-semibold mb-1">Mensaje <span class="text-danger">*</span></label>
+                                <textarea id="contactMensaje" rows="2" class="form-control form-control-sm bg-dark bg-opacity-75 text-light border-secondary" placeholder="¿En qué puedo ayudarte o qué te gustaría comentar?" required></textarea>
+                                <div class="text-danger small mt-0 d-none" id="errContactMensaje" style="font-size: 0.72rem;">Escribe un mensaje de al menos 10 caracteres.</div>
+                            </div>
+
+                            <button type="submit" class="btn btn-submit-glow w-100 fw-bold py-2 rounded-3 text-white shadow-sm">
+                                <i class="fa-solid fa-paper-plane me-1"></i> Enviar Mensaje
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- 4. FOOTER / BARRA DE ESTADO INFERIOR -->
+        <footer class="pwa-bottombar">
+            <span>&copy; 2026 Josue Marcelo Vasquez Zeballos</span>
+            <span><i class="fa-solid fa-wand-magic-sparkles text-warning me-1"></i>PWA Fluida • Animaciones y Sin Scroll</span>
+        </footer>
+
+    </div>
+
+    <!-- MODAL DE BOOTSTRAP PARA EL TRÁILER DE JUEGOS -->
+    <div class="modal fade" id="modalTrailer" tabindex="-1" aria-labelledby="modalTrailerLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark text-light border border-secondary shadow-lg">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title fw-bold text-warning" id="modalTrailerLabel">Tráiler Oficial</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="ratio ratio-16x9">
+                        <iframe id="iframeTrailer" src="" title="YouTube video player" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Script de interacción general (filtros, modales, etc.) -->
+    <!-- Script de interacción general (filtros de dataset, modales) -->
     <script src="script.js"></script>
 
-    <!-- Script PWA e Interacción Móvil jQuery -->
+    <!-- Script PWA: Menú, Desvanecimiento, Carrusel de Música Amplio con Swipe Táctil y Contacto -->
     <script>
-        $(document).ready(function () {
-            // 1. Menú Hamburguesa animado con jQuery (SlideToggle)
-            $('#hamburgerBtn').click(function () {
-                $('#navMenu').slideToggle(250);
+        // CATÁLOGO COMPLETO DE LAS 28 CANCIONES/BANDAS DEL PROYECTO
+        const MUSIC_CATALOG = [
+            // Rock / Alternativo (9)
+            { rank: 1, artist: "Linkin Park", genre: "rock", genreLabel: "Rock / Nu Metal", badgeClass: "bg-warning text-dark", songs: "In the End, Numb, Castle of Glass" },
+            { rank: 2, artist: "Three Days Grace", genre: "rock", genreLabel: "Rock Alternativo", badgeClass: "bg-warning text-dark", songs: "Animal I Have Become, Pain" },
+            { rank: 3, artist: "Avenged Sevenfold", genre: "rock", genreLabel: "Hard Rock / Metal", badgeClass: "bg-warning text-dark", songs: "Nightmare, Hail to the King" },
+            { rank: 4, artist: "OneRepublic", genre: "rock", genreLabel: "Pop Rock", badgeClass: "bg-warning text-dark", songs: "Counting Stars, Secrets" },
+            { rank: 5, artist: "Paramore", genre: "rock", genreLabel: "Pop Punk / Rock", badgeClass: "bg-warning text-dark", songs: "Misery Business, Ain't It Fun" },
+            { rank: 6, artist: "Simple Plan", genre: "rock", genreLabel: "Pop Punk", badgeClass: "bg-warning text-dark", songs: "Welcome to My Life, Perfect" },
+            { rank: 7, artist: "Fall Out Boy", genre: "rock", genreLabel: "Rock Alternativo", badgeClass: "bg-warning text-dark", songs: "Centuries, Thnks fr the Mmrs" },
+            { rank: 8, artist: "Magic!", genre: "rock", genreLabel: "Reggae Fusion / Pop", badgeClass: "bg-warning text-dark", songs: "Rude" },
+            { rank: 9, artist: "R5", genre: "rock", genreLabel: "Pop Rock", badgeClass: "bg-warning text-dark", songs: "Smile, Pass Me By" },
+
+            // Metal / Post-Hardcore (6)
+            { rank: 10, artist: "Motionless in White", genre: "metal", genreLabel: "Metalcore / Industrial", badgeClass: "bg-danger text-white", songs: "Masterpiece, Cyberhex" },
+            { rank: 11, artist: "Bad Omens", genre: "metal", genreLabel: "Metal Alternativo", badgeClass: "bg-danger text-white", songs: "Just Pretend, The Death of Peace of Mind" },
+            { rank: 12, artist: "Falling in Reverse", genre: "metal", genreLabel: "Post-Hardcore / Rock", badgeClass: "bg-danger text-white", songs: "Popular Monster, Voices in My Head" },
+            { rank: 13, artist: "Set It Off", genre: "metal", genreLabel: "Rock Sinfónico", badgeClass: "bg-danger text-white", songs: "Wolf in Sheep's Clothing, Punching Bag" },
+            { rank: 14, artist: "A Day to Remember", genre: "metal", genreLabel: "Metalcore / Pop Punk", badgeClass: "bg-danger text-white", songs: "If It Means a Lot to You, Downfall" },
+            { rank: 15, artist: "Skillet", genre: "metal", genreLabel: "Rock / Alt Metal", badgeClass: "bg-danger text-white", songs: "Monster, Hero" },
+
+            // Pop / Electropop (6)
+            { rank: 16, artist: "5 Seconds of Summer", genre: "pop", genreLabel: "Pop Rock", badgeClass: "bg-info text-dark", songs: "Youngblood, Teeth" },
+            { rank: 17, artist: "MKTO", genre: "pop", genreLabel: "Pop / R&B", badgeClass: "bg-info text-dark", songs: "Classic, Thank You" },
+            { rank: 18, artist: "DNCE", genre: "pop", genreLabel: "Dance Pop / Funk", badgeClass: "bg-info text-dark", songs: "Cake by the Ocean" },
+            { rank: 19, artist: "Daft Punk", genre: "pop", genreLabel: "Electrónica / House", badgeClass: "bg-info text-dark", songs: "Get Lucky, Instant Crush" },
+            { rank: 20, artist: "The Black Eyed Peas", genre: "pop", genreLabel: "Hip Hop / Pop", badgeClass: "bg-info text-dark", songs: "I Gotta Feeling, Pump It" },
+            { rank: 21, artist: "Alec Benjamin", genre: "pop", genreLabel: "Pop Acústico / Indie", badgeClass: "bg-info text-dark", songs: "Let Me Down Slowly, Water Fountain" },
+
+            // Urbano / Reggaetón (5)
+            { rank: 22, artist: "Daddy Yankee", genre: "urbano", genreLabel: "Reggaetón", badgeClass: "bg-success text-white", songs: "Gasolina, Despacito, Con Calma" },
+            { rank: 23, artist: "Wisin y Yandel", genre: "urbano", genreLabel: "Reggaetón", badgeClass: "bg-success text-white", songs: "Sexy Movimiento, Pam Pam" },
+            { rank: 24, artist: "Farruko", genre: "urbano", genreLabel: "Urbano / Trap", badgeClass: "bg-success text-white", songs: "Pepas, Delincuente" },
+            { rank: 25, artist: "Chino y Nacho", genre: "urbano", genreLabel: "Pop Latino / Urbano", badgeClass: "bg-success text-white", songs: "Mi Niña Bonita, Me Voy Enamorando" },
+            { rank: 26, artist: "Major Lazer", genre: "urbano", genreLabel: "EDM / Dancehall", badgeClass: "bg-success text-white", songs: "Lean On, Cold Water" },
+
+            // Indie / Folk / Rock en Español (2)
+            { rank: 27, artist: "Jesse & Joy", genre: "indie", genreLabel: "Pop Latino / Folk", badgeClass: "bg-primary text-white", songs: "¡Corre!, Ecos de Amor" },
+            { rank: 28, artist: "Álvaro Soler", genre: "indie", genreLabel: "Pop Latino", badgeClass: "bg-primary text-white", songs: "Sofia, La Cintura" }
+        ];
+
+        // FUNCIÓN: RENDERIZAR CARRUSEL DE MÚSICA EN 2 FILAS CON TARJETAS AMPLIAS Y CÓMODAS
+        function renderMusicCarousel(filterGenre = 'todos') {
+            const isMobile = window.innerWidth < 768;
+            const itemsPerSlide = isMobile ? 2 : 4;
+            const colClass = isMobile ? 'col-12' : 'col-6';
+
+            const filtered = (filterGenre === 'todos')
+                ? MUSIC_CATALOG
+                : MUSIC_CATALOG.filter(m => m.genre === filterGenre);
+
+            const $carouselInner = $('#musicCarouselInner');
+            const $indicators = $('#musicCarouselIndicators');
+            const $counter = $('#musicPageCounter');
+
+            $carouselInner.empty();
+            $indicators.empty();
+
+            if (filtered.length === 0) {
+                $carouselInner.html('<div class="carousel-item active text-center py-4 text-muted fs-5">No hay canciones para este género.</div>');
+                $counter.text('0 canciones');
+                return;
+            }
+
+            const totalSlides = Math.ceil(filtered.length / itemsPerSlide);
+
+            for (let i = 0; i < totalSlides; i++) {
+                const slideItems = filtered.slice(i * itemsPerSlide, (i + 1) * itemsPerSlide);
+                const isActive = i === 0 ? 'active' : '';
+
+                let cardsHtml = '';
+                slideItems.forEach(item => {
+                    cardsHtml += `
+                        <div class="${colClass}">
+                            <div class="music-card-item p-3 h-100 d-flex align-items-center gap-3">
+                                <!-- Icono de Vinilo e Indicador de Rank -->
+                                <div class="flex-shrink-0 d-flex flex-column align-items-center justify-content-center text-center" style="min-width: 48px;">
+                                    <i class="fa-solid fa-compact-disc music-disc-icon"></i>
+                                    <span class="badge bg-secondary bg-opacity-75 text-warning mt-1 fw-bold font-monospace" style="font-size: 0.75rem;">#${item.rank}</span>
+                                </div>
+
+                                <!-- Información Completa, Clara y Amplia -->
+                                <div class="flex-grow-1 overflow-hidden">
+                                    <div class="d-flex justify-content-between align-items-center gap-2 mb-1 flex-wrap">
+                                        <h5 class="fw-bold text-white mb-0 text-truncate" style="font-size: 1.12rem; letter-spacing: 0.3px;">
+                                            ${item.artist}
+                                        </h5>
+                                        <span class="badge ${item.badgeClass} flex-shrink-0" style="font-size: 0.74rem; padding: 4px 10px; font-weight: 600;">
+                                            ${item.genreLabel}
+                                        </span>
+                                    </div>
+                                    <p class="text-light opacity-80 mb-0" style="font-size: 0.88rem; line-height: 1.35;">
+                                        <i class="fa-solid fa-music text-danger me-1"></i>${item.songs}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                const slideHtml = `
+                    <div class="carousel-item ${isActive}">
+                        <div class="row g-2 g-md-3">
+                            ${cardsHtml}
+                        </div>
+                    </div>
+                `;
+                $carouselInner.append(slideHtml);
+
+                const indicatorHtml = `
+                    <button type="button" data-bs-target="#musicCarousel" data-bs-slide-to="${i}" class="${isActive}" aria-label="Página ${i + 1}"></button>
+                `;
+                $indicators.append(indicatorHtml);
+            }
+
+            $counter.text(`Página 1 de ${totalSlides} • ${filtered.length} canciones`);
+
+            const carouselEl = document.getElementById('musicCarousel');
+            if (carouselEl) {
+                const bsCarousel = bootstrap.Carousel.getOrCreateInstance(carouselEl, { interval: false });
+                bsCarousel.to(0);
+            }
+        }
+
+        // FUNCIÓN: HABILITAR GESTOS TÁCTILES NATIVOS (SWIPE / DESLIZAR)
+        function enableTouchSwipe(elementId) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+
+            let startX = 0;
+            let startY = 0;
+            let endX = 0;
+            let endY = 0;
+
+            el.addEventListener('touchstart', function(e) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+
+            el.addEventListener('touchend', function(e) {
+                endX = e.changedTouches[0].clientX;
+                endY = e.changedTouches[0].clientY;
+                const diffX = endX - startX;
+                const diffY = endY - startY;
+
+                // Solo si el deslizamiento es más horizontal que vertical y supera el umbral de 35px
+                if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+                    const bsCarousel = bootstrap.Carousel.getOrCreateInstance(el);
+                    if (diffX < 0) {
+                        bsCarousel.next();
+                    } else {
+                        bsCarousel.prev();
+                    }
+                }
+            }, { passive: true });
+        }
+
+        // FUNCIÓN PRINCIPAL DE TRANSICIÓN CON DESVANECIMIENTO (FadeIn / FadeOut)
+        function navigateToSection(targetId) {
+            const $current = $('.pwa-section:visible');
+            const $target = $(targetId);
+
+            if ($target.length === 0 || $current.attr('id') === $target.attr('id')) {
+                $('#mobileDrawer').slideUp(200);
+                return;
+            }
+
+            // Cerrar menú móvil automáticamente
+            $('#mobileDrawer').slideUp(200);
+
+            // Actualizar botones activos en barra PC y menú móvil
+            $('.pwa-nav-btn, .mobile-nav-btn').removeClass('active');
+            $(`.pwa-nav-btn[data-target="${targetId}"], .mobile-nav-btn[data-target="${targetId}"]`).addClass('active');
+
+            // Efecto de desvanecimiento suave (fade out del actual, fade in del nuevo con clase active)
+            $current.stop(true, true).fadeOut(180, function() {
+                $current.removeClass('active');
+                $target.stop(true, true).fadeIn(240).addClass('active').css('display', 'flex');
+            });
+        }
+
+        $(document).ready(function() {
+            // 1. Inicializar Carrusel de Música Amplio en 2 filas
+            renderMusicCarousel('todos');
+
+            // Habilitar gestos de deslizar (swipe) táctil para móviles
+            enableTouchSwipe('musicCarousel');
+            enableTouchSwipe('pwaHeroCarousel');
+
+            // Actualizar contador al navegar entre diapositivas del carrusel de música
+            $('#musicCarousel').on('slid.bs.carousel', function (e) {
+                const total = $('#musicCarouselIndicators button').length;
+                const activeGenre = $('.btn-filter-music.active').text();
+                $('#musicPageCounter').text(`Página ${e.to + 1} de ${total} • ${activeGenre}`);
             });
 
-            // Cerrar menú automáticamente al hacer clic en cualquier enlace
-            $('#navMenu a').click(function () {
-                $('#navMenu').slideUp(200);
+            // Filtros de música
+            $('.btn-filter-music').click(function() {
+                $('.btn-filter-music').removeClass('active');
+                $(this).addClass('active');
+                const genre = $(this).data('filter-music');
+                renderMusicCarousel(genre);
             });
 
-            // 2. Registro del Service Worker para la PWA
+            // Ajustar el tamaño si el usuario redimensiona la pantalla
+            let resizeTimer;
+            $(window).resize(function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    const activeGenre = $('.btn-filter-music.active').data('filter-music') || 'todos';
+                    renderMusicCarousel(activeGenre);
+                }, 150);
+            });
+
+            // 2. Manejo del Menú Hamburguesa para Móvil
+            $('#mobileMenuBtn').click(function(e) {
+                e.stopPropagation();
+                $('#mobileDrawer').slideToggle(220);
+            });
+
+            $(document).click(function(e) {
+                if (!$(e.target).closest('#mobileDrawer, #mobileMenuBtn').length) {
+                    $('#mobileDrawer').slideUp(200);
+                }
+            });
+
+            // 3. Clic en los botones de navegación (PC y Móvil)
+            $('.pwa-nav-btn, .mobile-nav-btn').click(function() {
+                const target = $(this).data('target');
+                if (target) {
+                    navigateToSection(target);
+                }
+            });
+
+            // 4. Formulario de Contactarme con validación
+            $('#pwaContactForm').submit(function(e) {
+                e.preventDefault();
+                let valid = true;
+
+                const nombre = $('#contactNombre').val().trim();
+                const email = $('#contactEmail').val().trim();
+                const mensaje = $('#contactMensaje').val().trim();
+
+                // Validación de Nombre
+                if (nombre.length < 2) {
+                    $('#errContactNombre').removeClass('d-none');
+                    valid = false;
+                } else {
+                    $('#errContactNombre').addClass('d-none');
+                }
+
+                // Validación de Correo
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    $('#errContactEmail').removeClass('d-none');
+                    valid = false;
+                } else {
+                    $('#errContactEmail').addClass('d-none');
+                }
+
+                // Validación de Mensaje
+                if (mensaje.length < 10) {
+                    $('#errContactMensaje').removeClass('d-none');
+                    valid = false;
+                } else {
+                    $('#errContactMensaje').addClass('d-none');
+                }
+
+                if (valid) {
+                    $('#contactSuccessMsg').removeClass('d-none');
+                    $('#pwaContactForm')[0].reset();
+                    setTimeout(() => {
+                        $('#contactSuccessMsg').addClass('d-none');
+                    }, 5000);
+                }
+            });
+
+            // 5. Registro del Service Worker
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('./sw.js')
-                    .then(function (reg) {
-                        console.log('[PWA] Service Worker registrado exitosamente con scope:', reg.scope);
+                    .then(function(reg) {
+                        console.log('[PWA] Service Worker activo en scope:', reg.scope);
                     })
-                    .catch(function (err) {
-                        console.warn('[PWA] Error al registrar Service Worker:', err);
+                    .catch(function(err) {
+                        console.warn('[PWA] Error SW:', err);
                     });
             }
 
-            // 3. Manejo del botón de instalación nativo PWA
+            // 6. Manejo del botón de instalación
             let deferredPrompt = null;
             const $installBtn = $('#pwaInstallBtn');
 
-            window.addEventListener('beforeinstallprompt', function (e) {
+            window.addEventListener('beforeinstallprompt', function(e) {
                 e.preventDefault();
                 deferredPrompt = e;
                 $installBtn.removeClass('d-none');
             });
 
-            $installBtn.click(async function () {
+            $installBtn.click(async function() {
                 if (!deferredPrompt) return;
                 deferredPrompt.prompt();
                 const choice = await deferredPrompt.userChoice;
-                console.log('[PWA] Opción de instalación del usuario:', choice.outcome);
+                console.log('[PWA] Instalación:', choice.outcome);
                 deferredPrompt = null;
                 $installBtn.addClass('d-none');
             });
 
-            window.addEventListener('appinstalled', function () {
-                console.log('[PWA] Aplicación instalada exitosamente');
+            window.addEventListener('appinstalled', function() {
                 $installBtn.addClass('d-none');
             });
         });
     </script>
 </body>
-
 </html>

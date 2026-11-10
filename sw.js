@@ -1,10 +1,13 @@
-// Service Worker para Sitio Web Personal PWA (index2.html)
-// Alcance: Solo página principal PWA (index2.html) e imágenes (img/), sin incluir subcarpetas.
+// Service Worker para Sitio Web Personal y PWA
+// Alcance: Página principal (index.html), Versión PWA (index2.html) e imágenes (img/)
+// Subcarpetas como catalogos/, cibercafe/, grupal/ quedan totalmente excluidas.
 
-const CACHE_NAME = 'web-personal-pwa-v2';
+const CACHE_NAME = 'web-personal-pwa-v3';
 
-// Recursos esenciales que se pre-cargan al instalar el Service Worker
+// Recursos esenciales pre-cacheados
 const PRECACHE_ASSETS = [
+  './',
+  './index.html',
   './index2.html',
   './styles.css',
   './script.js',
@@ -20,7 +23,7 @@ const PRECACHE_ASSETS = [
   './img/icons/favicon-32.png'
 ];
 
-// CDNs permitidos para soporte offline de la página PWA
+// CDNs permitidos para soporte offline
 const ALLOWED_CDNS = [
   'code.jquery.com',
   'cdn.jsdelivr.net',
@@ -29,7 +32,7 @@ const ALLOWED_CDNS = [
   'fonts.gstatic.com'
 ];
 
-// Evento de instalación: cachear recursos esenciales
+// Instalación
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -44,7 +47,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Evento de activación: limpiar cachés obsoletas y tomar el control
+// Activación y limpieza de cachés antiguas
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -60,12 +63,10 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Determina si una petición debe ser gestionada por el Service Worker
+// Filtro de peticiones
 function shouldHandleRequest(url) {
-  // Solo peticiones HTTP o HTTPS
   if (!url.protocol.startsWith('http')) return false;
 
-  // Si es del mismo origen
   if (url.origin === self.location.origin) {
     const scopePath = new URL(self.registration.scope).pathname;
     let relativePath = url.pathname;
@@ -73,14 +74,13 @@ function shouldHandleRequest(url) {
       relativePath = relativePath.slice(scopePath.length);
     }
 
-    // Excluir cualquier subcarpeta distinta a img/ (ej. catalogos/, cibercafe/, grupal/)
+    // Excluir cualquier subcarpeta distinta a img/ (catalogos, cibercafe, grupal, etc.)
     if (relativePath.includes('/') && !relativePath.startsWith('img/')) {
       return false;
     }
     return true;
   }
 
-  // Si proviene de un CDN permitido
   if (ALLOWED_CDNS.some((cdn) => url.hostname.includes(cdn))) {
     return true;
   }
@@ -88,18 +88,17 @@ function shouldHandleRequest(url) {
   return false;
 }
 
-// Evento Fetch: Estrategia de respuesta
+// Fetch
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   const url = new URL(event.request.url);
 
-  // Si no pertenece a la página principal ni img/ ni CDNs permitidos, dejar pasar a la red
   if (!shouldHandleRequest(url)) {
     return;
   }
 
-  // Para navegación HTML: Network first con fallback a caché de index2.html
+  // Navegación HTML
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
@@ -113,13 +112,13 @@ self.addEventListener('fetch', (event) => {
         .catch(async () => {
           const cachedResponse = await caches.match(event.request);
           if (cachedResponse) return cachedResponse;
-          return caches.match('./index2.html');
+          return caches.match('./index2.html') || caches.match('./index.html') || caches.match('./');
         })
     );
     return;
   }
 
-  // Para recursos estáticos (CSS, JS, imágenes, CDNs): Stale-While-Revalidate
+  // Assets estáticos (Stale-While-Revalidate)
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       const fetchPromise = fetch(event.request)
