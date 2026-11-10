@@ -1,12 +1,11 @@
-// Service Worker para Sitio Web Personal
-// Alcance: Solo página principal e imágenes (img/), sin incluir subcarpetas.
+// Service Worker para Sitio Web Personal PWA (index2.html)
+// Alcance: Solo página principal PWA (index2.html) e imágenes (img/), sin incluir subcarpetas.
 
-const CACHE_NAME = 'web-personal-v1';
+const CACHE_NAME = 'web-personal-pwa-v2';
 
 // Recursos esenciales que se pre-cargan al instalar el Service Worker
 const PRECACHE_ASSETS = [
-  './',
-  './index.html',
+  './index2.html',
   './styles.css',
   './script.js',
   './manifest.json',
@@ -21,8 +20,9 @@ const PRECACHE_ASSETS = [
   './img/icons/favicon-32.png'
 ];
 
-// CDNs permitidos para soporte offline de la página principal
+// CDNs permitidos para soporte offline de la página PWA
 const ALLOWED_CDNS = [
+  'code.jquery.com',
   'cdn.jsdelivr.net',
   'cdnjs.cloudflare.com',
   'fonts.googleapis.com',
@@ -33,7 +33,6 @@ const ALLOWED_CDNS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      // Usamos map individual para asegurar que si un recurso falla, no impida la instalación
       return Promise.allSettled(
         PRECACHE_ASSETS.map((asset) =>
           cache.add(asset).catch((err) => {
@@ -68,21 +67,20 @@ function shouldHandleRequest(url) {
 
   // Si es del mismo origen
   if (url.origin === self.location.origin) {
-    // Calculamos la ruta relativa respecto al scope (raíz o /web-personal/)
     const scopePath = new URL(self.registration.scope).pathname;
     let relativePath = url.pathname;
     if (relativePath.startsWith(scopePath)) {
       relativePath = relativePath.slice(scopePath.length);
     }
 
-    // Si tiene subcarpeta (contiene '/') y NO empieza con 'img/' ni 'img\', excluirla
+    // Excluir cualquier subcarpeta distinta a img/ (ej. catalogos/, cibercafe/, grupal/)
     if (relativePath.includes('/') && !relativePath.startsWith('img/')) {
-      return false; // Ignorar subcarpetas como catalogos/, cibercafe/, grupal/, etc.
+      return false;
     }
     return true;
   }
 
-  // Si proviene de un CDN permitido para estilos/fuentes/iconos
+  // Si proviene de un CDN permitido
   if (ALLOWED_CDNS.some((cdn) => url.hostname.includes(cdn))) {
     return true;
   }
@@ -101,7 +99,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Para navegación HTML (cargar index.html): Network first con fallback a caché
+  // Para navegación HTML: Network first con fallback a caché de index2.html
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
@@ -115,7 +113,7 @@ self.addEventListener('fetch', (event) => {
         .catch(async () => {
           const cachedResponse = await caches.match(event.request);
           if (cachedResponse) return cachedResponse;
-          return caches.match('./index.html') || caches.match('./');
+          return caches.match('./index2.html');
         })
     );
     return;
@@ -140,4 +138,3 @@ self.addEventListener('fetch', (event) => {
     })
   );
 });
-

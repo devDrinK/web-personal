@@ -1,8 +1,8 @@
 {
-  "name": "Josue Marcelo Vasquez Zeballos | Web Personal",
-  "short_name": "Web Personal",
-  "description": "Sitio web personal y portafolio interactivo de Josue Marcelo Vasquez Zeballos.",
-  "start_url": "./index.html",
+  "name": "Josue Marcelo Vasquez Zeballos | Web Personal PWA",
+  "short_name": "Web Personal PWA",
+  "description": "Sitio web personal y portafolio interactivo PWA de Josue Marcelo Vasquez Zeballos.",
+  "start_url": "./index2.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
@@ -37,4 +37,3 @@
     }
   ]
 }
-
